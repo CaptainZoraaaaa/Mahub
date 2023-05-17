@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Mahhub" />
         <module name="OnlineShop" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Mahhub" target="20" />
       <module name="OnlineShop" target="20" />
     </bytecodeTargetLevel>
   </component>
