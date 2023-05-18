@@ -22,6 +22,10 @@ public class Server {
         return server;
     }
 
+    // TODO: 2023-05-18 template method är en pattern som vi kan använda oss av för add product
+    //  och remove. Ex) att vi ska logga den. Kolla lab1.
+    // TODO: 2023-05-18 Proxy pattern seminar 3 part 2.  
+
     public String addProduct(Product product){
         productHashMap.put(product.id, product);
 
