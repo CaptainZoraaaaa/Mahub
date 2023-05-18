@@ -1,14 +1,10 @@
 package API;
 
 import Entity.ImageIcontester;
-import Entity.Perons;
-import com.fasterxml.jackson.databind.JsonNode;
+import Entity.Persons;
 import com.google.gson.Gson;
-import netscape.javascript.JSObject;
-import org.eclipse.jetty.io.WriterOutputStream;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -22,12 +18,12 @@ public class Main2 {
         image2.title = "hej2";
 
 
-        Perons perons = new Perons("2","2");
-        Perons perons2 = new Perons("3","3");
-        ArrayList<Perons> list = new ArrayList<>();
-        Perons[] ok = new Perons[2];
-        list.add(perons);
-        list.add(perons2);
+        Persons persons = new Persons("2","2");
+        Persons persons2 = new Persons("3","3");
+        ArrayList<Persons> list = new ArrayList<>();
+        Persons[] ok = new Persons[2];
+        list.add(persons);
+        list.add(persons2);
         Gson gson = new Gson();
         String ssss = gson.toJson(list);
         BufferedWriter br = new BufferedWriter(new FileWriter("src/main/java/API/Text.txt"));
@@ -38,7 +34,7 @@ public class Main2 {
         list.clear();
         BufferedReader bw = new BufferedReader(new FileReader("src/main/java/API/Text.txt"));
         String text = bw.readLine();
-        list = gson.fromJson(text, (Type) Perons[].class);
+        list = gson.fromJson(text, (Type) Persons[].class);
         System.out.println(ok[1]);
     }
 }
