@@ -1,10 +1,10 @@
 package Entity;
 
-public class Perons {
+public class Persons {
     private String name;
     private String age;
 
-    public Perons(String name, String age) {
+    public Persons(String name, String age) {
         this.name = name;
         this.age = age;
     }
