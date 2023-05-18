@@ -1,6 +1,5 @@
 
 $(document).ready(function () {
-  const a =null;
     document.getElementById("new-btn").addEventListener("click", () =>{
         getStart();
     });
@@ -13,7 +12,7 @@ function getStart(){
   }).done(function (data){
     console.log(data.s);
     for(i=0; i<8; i++){
-      $('#randomRecipes').append('<div class="flex-item" id="d'+i+'" > <img src="'+"images/webpic.jpg"+'" alt="Image" id="img'+data.s+'"> <p id="p'+i+'">'+"TITLE"+'</p></div>');
+      $('#randomProduct').append('<div class="flex-item" id="d'+i+'" > <img src="'+"images/webpic.jpg"+'" alt="Image" id="img'+data.s+'"> <p id="p'+i+'">'+"TITLE"+'</p></div>');
     }
   })
 }
