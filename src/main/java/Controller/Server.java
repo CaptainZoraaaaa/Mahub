@@ -102,6 +102,7 @@ public class Server {
         System.out.println(server.saveToFile());
         System.out.println(server.readFile());
 
+        System.out.println(server.removeProduct("TestProduct1"));
         System.out.println(server.removeProduct("TestProduct2"));
     }
 }
