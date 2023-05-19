@@ -24,7 +24,7 @@ public class Server {
     private LinkedHashMap<Integer, Product> productHashMap = new LinkedHashMap<>();
     //Username as Id
     private HashMap<String, User> users = new HashMap<>();
-    //Username and their items that have been requested to be bought
+    //Username (owner of items) and their items that have been requested to be bought
     private HashMap<String, ArrayList<Product>> buyRequestsToSeller = new HashMap<>();
     //Username and their purchase history
     private HashMap<String, ArrayList<Product>> purchaseHistory = new HashMap<>();
@@ -51,6 +51,7 @@ public class Server {
         return productHashMap.remove(productId);
     }
 
+    //From owner's client
     public void sellProduct(int productId, String buyerName){
         Product product = productHashMap.get(productId);
         product.status = "sold";
@@ -70,7 +71,6 @@ public class Server {
             Product product = productHashMap.get(productId);
             String userId = productHashMap.get(productId).sellerName;
             product.buyerName = buyerName;
-            product.buyerName = users.get(userId).username;
             if(buyRequestsToSeller.get(userId) != null){
                 buyRequestsToSeller.get(userId).add(product);
             } else {
@@ -81,10 +81,10 @@ public class Server {
     }
 
     public Product[] getItemsWithOffer(String username){
-        ArrayList<Product> tenp = buyRequestsToSeller.get(username);
-        Product[] products = new Product[tenp.size()];
+        ArrayList<Product> temp = buyRequestsToSeller.get(username);
+        Product[] products = new Product[temp.size()];
         int i=0;
-        for (Product product:tenp) {
+        for (Product product:temp) {
             products[i++]=product;
         }
 
