@@ -13,17 +13,19 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 
 public class Server {
     static Server server = new Server();
-    private LinkedHashMap<String, Product> productHashMap = new LinkedHashMap<>();
+    //ProductId and Product
+    private LinkedHashMap<Integer, Product> productHashMap = new LinkedHashMap<>();
     private ArrayList<User> users = new ArrayList<>();
-
-    private HashMap<Integer, ArrayList<String>> message = new HashMap<>();
-    private ConcurrentLinkedDeque<SseClient> clients = new ConcurrentLinkedDeque<>();
-    private Object lock = new Object();
+    //userId and their items that have been requested to be bought
+    private HashMap<Integer, ArrayList<Product>> buyRequestsToSeller = new HashMap<>();
+    //userId and connection to their website
+    //productId and UserId
 
     public static Server getInstance(){
         if (server==null){
@@ -35,44 +37,49 @@ public class Server {
     // TODO: 2023-05-18 template method är en pattern som vi kan använda oss av för add product
     //  och remove. Ex) att vi ska logga den. Kolla lab1.
     // TODO: 2023-05-18 Proxy pattern seminar 3 part 2.
+    // TODO: 2023-05-19 Observer pattern
 
     public String addProduct(Product product){
-        productHashMap.put(product.productId, product);
-
+        product.productId = productHashMap.size();
+        productHashMap.put((product.productId), product);
         return "The product have been added to MaHub";
     }
 
-    public Product removeProduct(String productId){
+    public Product removeProduct(int productId){
         return productHashMap.remove(productId);
     }
 
-    public void sellProduct(String productId){
+    public void sellProduct(int productId){
         productHashMap.get(productId).status = "sold";
     }
 
-    public String[] getMessages(int userId){
-        synchronized (lock){
-            while(message.get(userId) == null){
-                try {
-                    lock.wait();
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
+    public void buyRequest(int[] productIds){
+        for (int productId: productIds) {
+            Product product = productHashMap.get(productId);
+            int userId = productHashMap.get(productId).sellerId;
+            if(buyRequestsToSeller.get(userId) != null){
+                buyRequestsToSeller.get(userId).add(product);
             }
-
         }
     }
 
-    public void buyRequest(){
+    public Product[] getItemsWithOffer(int userId){
+        ArrayList<Product> tenp = buyRequestsToSeller.get(userId);
+        Product[] products = new Product[tenp.size()];
+        int i=0;
+        for (Product product:tenp) {
+            products[i++]=product;
+        }
 
+        return products;
     }
 
     public Product[] getProducts (int offset){
-        Product[] temp = new Product[10];
+        Product[] temp = new Product[9];
         int counter = 0;
         int offsetCounter = offset;
 
-        for (String key: productHashMap.keySet()) {
+        for (Integer key: productHashMap.keySet()) {
             if(offsetCounter>0){
                offsetCounter--;
                continue;
@@ -94,7 +101,7 @@ public class Server {
     public Product[] searchProduct(String name, double priceRangeMin, double priceRangeMax, String condition){
         ArrayList<Product> temp = new ArrayList<>();
 
-        for (String key: productHashMap.keySet()) {
+        for (Integer key: productHashMap.keySet()) {
             Product product = productHashMap.get(key);
             if(product.productName.equalsIgnoreCase(name)
                     && product.price <= priceRangeMax
@@ -166,14 +173,14 @@ public class Server {
     public static void main(String[] args) {
         Server server = Server.getInstance();
         Product product = new Product();
-        product.productId = "TestProduct1";
+        product.productId = 0;
         product.productName = "Nintendo Switch";
         product.sellerName = "Max Tiderman";
         product.date = "2023-05-17";
         product.image = "https://www.netonnet.se/GetFile/ProductImagePrimary/gaming/spel-och-konsol/nintendo/nintendo-konsol/nintendo-switch-oled-model-white(1019708)_450564_14_Normal_Extra.jpg";
 
         Product product1 = new Product();
-        product1.productId = "TestProduct2";
+        product1.productId = 1;
         product1.productName = "Playstation 5";
         product1.sellerName = "Daniel Olsson";
         product1.date = "2023-05-01";
@@ -186,7 +193,7 @@ public class Server {
         System.out.println(server.saveToFile());
         System.out.println(server.readFile());
 
-        System.out.println(server.removeProduct("TestProduct1"));
-        System.out.println(server.removeProduct("TestProduct2"));
+        System.out.println(server.removeProduct(0));
+        System.out.println(server.removeProduct(1));
     }
 }

@@ -1,9 +1,10 @@
 package Entity;
 
 public class Product {
-    public String productId;
+    public int productId;
     public String productName;
     public String sellerName;
+    public int sellerId;
     public double price;
     public String image;
     //date for when it's put on the market

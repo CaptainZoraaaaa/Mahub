@@ -34,9 +34,6 @@ public class Main {
                 int i;
             }).post("/addProduct", ctx->{
 
-            }).sse("/", ctx ->{
-                server.
-                ctx.sendEvent("request", "JSON DATA");
             });
 
         } catch (Exception e){
