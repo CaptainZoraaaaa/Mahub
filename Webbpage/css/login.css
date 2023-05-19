@@ -5,7 +5,6 @@
 }
 img{
     max-width: 16px;
-    
 }
 section{
     display: flex;
@@ -13,14 +12,14 @@ section{
     align-items: center;
     min-height: 95vh;
     width: 100%;
-    background-image: url('../images/Background-nice-wallpaper-HD.jpg');
+    background-image: url('../images/number_one');
     background-size: cover;
     background-repeat: no-repeat;
 }
 .form-box{
     position: relative;
     width: 400px;
-    height: 450px;
+    height: 490px;
     background-color: transparent;
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 20px;
@@ -30,6 +29,7 @@ section{
     align-items: center;
 }
 .icon{
+    margin-top: 50px;
     min-width: 120px;
     display: block;
     margin-left: auto;
@@ -112,7 +112,7 @@ button {
     font-size: .9em;
     color: #fff;
     text-align: center;
-    margin: 25px 0 10px;
+    margin: 5px 0 10px;
 }
 .registerp p a{
     text-decoration: none;
@@ -121,4 +121,7 @@ button {
 }
 .register p a:hover{
     text-decoration: underline;
+}
+.rem-label{
+    margin-top: 35px;
 }
