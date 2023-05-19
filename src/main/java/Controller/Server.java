@@ -11,6 +11,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,11 +22,12 @@ public class Server {
     static Server server = new Server();
     //ProductId and Product
     private LinkedHashMap<Integer, Product> productHashMap = new LinkedHashMap<>();
-    private ArrayList<User> users = new ArrayList<>();
-    //userId and their items that have been requested to be bought
-    private HashMap<Integer, ArrayList<Product>> buyRequestsToSeller = new HashMap<>();
-    //userId and connection to their website
-    //productId and UserId
+    //Username as Id
+    private HashMap<String, User> users = new HashMap<>();
+    //Username and their items that have been requested to be bought
+    private HashMap<String, ArrayList<Product>> buyRequestsToSeller = new HashMap<>();
+    //Username and their purchase history
+    private HashMap<String, ArrayList<Product>> purchaseHistory = new HashMap<>();
 
     public static Server getInstance(){
         if (server==null){
@@ -49,22 +51,37 @@ public class Server {
         return productHashMap.remove(productId);
     }
 
-    public void sellProduct(int productId){
-        productHashMap.get(productId).status = "sold";
+    public void sellProduct(int productId, String buyerName){
+        Product product = productHashMap.get(productId);
+        product.status = "sold";
+        product.buyerName = buyerName;
+        product.datePurchased = new Date(System.currentTimeMillis());
+
+        if(purchaseHistory.get(buyerName) != null){
+            purchaseHistory.get(buyerName).add(product);
+        } else {
+            purchaseHistory.put(buyerName, new ArrayList<>());
+            purchaseHistory.get(buyerName).add(product);
+        }
     }
 
-    public void buyRequest(int[] productIds){
+    public void buyRequest(int[] productIds, String buyerName){
         for (int productId: productIds) {
             Product product = productHashMap.get(productId);
-            int userId = productHashMap.get(productId).sellerId;
+            String userId = productHashMap.get(productId).sellerName;
+            product.buyerName = buyerName;
+            product.buyerName = users.get(userId).username;
             if(buyRequestsToSeller.get(userId) != null){
+                buyRequestsToSeller.get(userId).add(product);
+            } else {
+                buyRequestsToSeller.put(userId, new ArrayList<>());
                 buyRequestsToSeller.get(userId).add(product);
             }
         }
     }
 
-    public Product[] getItemsWithOffer(int userId){
-        ArrayList<Product> tenp = buyRequestsToSeller.get(userId);
+    public Product[] getItemsWithOffer(String username){
+        ArrayList<Product> tenp = buyRequestsToSeller.get(username);
         Product[] products = new Product[tenp.size()];
         int i=0;
         for (Product product:tenp) {
@@ -96,6 +113,19 @@ public class Server {
         return temp;
     }
 
+    public Product[] getPurchaseHistory(String username, Date start, Date end){
+        ArrayList<Product> tenp = purchaseHistory.get(username);
+        Product[] products = new Product[tenp.size()];
+        int i=0;
+        for (Product product:tenp) {
+            if(product.date.before(end) && product.date.after(start)){
+                products[i++]=product;
+            }
+        }
+
+        return products;
+    }
+
 
     // TODO: 2023-05-19 Skriva klart metoden, fixa if satsen med ifall price och condition är null.
     public Product[] searchProduct(String name, double priceRangeMin, double priceRangeMax, String condition){
@@ -116,30 +146,18 @@ public class Server {
     }
 
     public String registerNewUser(User newUser){
-        boolean ok = true;
-        for (User user: users) {
-            if(user.email.equalsIgnoreCase(newUser.email) || user.username.equalsIgnoreCase(newUser.username)){
-                ok = false;
-                return "Could not register user, change email and/or username";
-            }
-        }
-        if(ok){
-            newUser.userId = users.size();
-            users.add(newUser);
-            return "User have successfully been added";
+        if(users.containsKey(newUser.username)) return "Could not register user, change username";
+
+        for (String key: users.keySet()) {
+            if(users.get(key).email.equalsIgnoreCase(newUser.email)) return "Could not register user, change email";
         }
 
-        return "Could not register user, change email and/or username";
+        users.put(newUser.username, newUser);
+        return "User have successfully been added";
     }
 
-    public User login(String username, String password){
-        for (User user: users) {
-            if(user.username.equals(username) && user.password.equals(password)){
-                return user;
-            }
-        }
-
-        return null;
+    public boolean login(String username, String password){
+        return users.get(username).password.equals(password);
     }
 
     public String saveToFile(){
@@ -176,14 +194,14 @@ public class Server {
         product.productId = 0;
         product.productName = "Nintendo Switch";
         product.sellerName = "Max Tiderman";
-        product.date = "2023-05-17";
+        product.date = new Date(2023,05,19);
         product.image = "https://www.netonnet.se/GetFile/ProductImagePrimary/gaming/spel-och-konsol/nintendo/nintendo-konsol/nintendo-switch-oled-model-white(1019708)_450564_14_Normal_Extra.jpg";
 
         Product product1 = new Product();
         product1.productId = 1;
         product1.productName = "Playstation 5";
         product1.sellerName = "Daniel Olsson";
-        product1.date = "2023-05-01";
+        product1.date = new Date(2023,05,19);
         product1.image = "https://www.netonnet.se/GetFile/ProductImagePrimary/gaming/spel-och-konsol/playstation/playstation-konsol/sony-playstation-5-c-chassi(1027489)_535790_6_Normal_Extra.jpg";
 
         server.addProduct(product);
