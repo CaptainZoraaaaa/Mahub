@@ -13,7 +13,7 @@
     <body>
         <header>
             <nav class="navbar">
-                <a href="#" class="nav-branding">aaaaaaa</a>
+                <a href="#" class="nav-branding">Mahub</a>
                 <ul class="nav-menu">
                     <li class="nav-item">
                         <a href="index.html" class="nav-link" id="home-btn">Home</a>
@@ -36,12 +36,16 @@
             </nav>
             <script src="Javascript/burger.js"></script>
         </header>
-        <div class="search-bar">
-            <input type="text" name="" id="search-bar">
-            <button class="search-btn">Search</button>
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" name="" id="search-input" class="search-input" placeholder="Search here !!!">
+                <button class="search-btn">Search</button>
+            </div>
+            <label for="" id="maxRange"> <input type="number" placeholder="Min Price" class="pricefield" id="minField"> - <input type="number" placeholder="Max Price" class="pricefield" min="maxField">
+            </label>
         </div>
         <div class="flex-container" id="randomProduct">
         </div>
-        <button onclick="getStart()">YOOOOOOO</button>
+        <button onclick="getStart()" id="loadMore-button" class="loadMore-button">Load More</button>
     </body>
 </html>

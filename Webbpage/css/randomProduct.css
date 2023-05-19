@@ -1,3 +1,7 @@
+
+body{
+  background-color: rgba(0, 0, 0, 0.90);
+}
 #container {
     text-align: center;
   }
@@ -27,22 +31,100 @@
   }
   
   .flex-item p {
-    color: black;
+    color: aliceblue;
     font-size: 90%;
     font-weight: 600;
     margin-top: 1%;
     overflow: hidden;
     white-space: nowrap;
   }
-  .search-bar{
-    margin: 20px;
-    display: flex;
-    align-items: center;
+  .search-container
+  {
+    margin: 0;
+    padding: 10px;
+    width: 100%;
     text-align: center;
     justify-content: center;
   }
   .search-bar{
-    margin-left: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #333;
+    max-width: 700px;
+    height: 50px;
+    border-radius: 2em;
   }
+  .search-input{
+    width: 80%;
+    height: 100%;
+    color: aliceblue;
+    background-color: transparent;
+    border-style: none;
+    outline: none;  
+  }
+  .search-btn{
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgb(44, 44, 44);
+    border-radius: 4px;
+    font-weight: normal;
+    text-transform: uppercase;
+    transition: all 0.2s ease-in-out;
+  } 
+  .searchimg{
+    max-width: 40px;
+    max-height: 30px;
+  }
+  .search-btn:hover{
+    color: rgba(255, 255, 255, 1);
+    box-shadow: 0 10px 15px rgba(255, 255, 255, 0.9);  
+  }
+  #loadMore-button {
+    padding: 4px;
+    background-color: #333;
+    border: none;
+    color: white; 
+    text-align: center; 
+    text-decoration: none; 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 90%; 
+    cursor: pointer;
+    transition: background-color 0.1s; 
+    transform: skew(10deg);
+    margin-top: 2%;
+    margin-bottom: 1%;
+}
+
+#loadMore-button:hover {
+  background-color: white;
+  color: #333;
+}
+
+#loadMore-button:active {
+  background-color: #222;
+}
+#maxRange{
+  color: aliceblue;
+}
+.pricefield{
+    max-width: 100px;
+    margin-top: 20px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #fff;
+    text-align: center;
+    justify-content: center;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+}
+::placeholder{
+  color: aliceblue;
+}
   
   
