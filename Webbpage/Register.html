@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mahhub</title>
+        <meta charset="UTF-8">
+        <meta name="" content="width=device-width">
+        <link rel="stylesheet" href="css/burgerstyle.css">
+        <link rel="stylesheet" href="css/login.css">  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    </head>
+    <body>
+        <script src="Javascript/button.js"></script>
+        <header>
+            <nav class="navbar">
+                <a href="#" class="nav-branding">Mahub</a>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link" id="home-btn">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="randomProduct.html" class="nav-link" id="new-btn">New</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="addProduct.html" class="nav-link">Add Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="Login.html" class="nav-link" id="login.btn">Login</a>
+                    </li>
+                </ul>
+                <nav class="burger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </nav>
+            </nav>
+            <script src="Javascript/burger.js"></script>
+        </header>
+        <section>
+            <div class="form-box">
+                <div class="form-value">
+                    <form action="">
+                        <img src="images/icon" alt="" class="icon">
+                        <div class="inputbox">
+                            <img src="images/mail.png" alt="" class="small-img">
+                            <input type="email" name="email" id="email" required> 
+                            <label for="">Email</label>
+                        </div>
+                        <div class="inputbox">
+                            <img src="images/profil.png" alt="" class="small-img">
+                            <input type="username" name="username" id="username" required> 
+                            <label for="">Username</label>
+                        </div>
+                        <div class="inputbox">
+                            <img src="images/lock.png" alt="" class="small-img2">
+                            <input type="password" name="password" id="password" required> 
+                            <label for="">Password</label>
+                        </div>
+                        <div class="inputbox">
+                            <img src="images/lock.png" alt="" class="small-img2">
+                            <input type="password" name="repassword" id="password" required> 
+                            <label for="">Reenter Password</label>
+                        </div>
+                        <!-- fixa en onclick -->
+                        <button onclick="">Register</button>
+                    
+                    </form>
+                </div>
+            </div>
+        </section>
+    </body>
