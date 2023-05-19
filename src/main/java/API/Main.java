@@ -13,6 +13,7 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
         try {
+            Server server = Server.getInstance();
             Javalin app = Javalin.create(config -> {
                 config.plugins.enableCors(cors -> {
                     cors.add(it -> {
@@ -29,9 +30,10 @@ public class Main {
                 ImageIcontester image = new ImageIcontester();
                 image.s = file;
                 ctx.json(image);
+
                 int i;
             }).post("/addProduct", ctx->{
-                Server server = Server.getInstance();
+
             });
 
         } catch (Exception e){
