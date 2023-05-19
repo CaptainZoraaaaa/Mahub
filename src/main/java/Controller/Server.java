@@ -1,19 +1,29 @@
 package Controller;
 
 import Entity.Product;
+import Entity.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import io.javalin.http.sse.SseClient;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 
 public class Server {
     static Server server = new Server();
     private LinkedHashMap<String, Product> productHashMap = new LinkedHashMap<>();
+    private ArrayList<User> users = new ArrayList<>();
+
+    private HashMap<Integer, ArrayList<String>> message = new HashMap<>();
+    private ConcurrentLinkedDeque<SseClient> clients = new ConcurrentLinkedDeque<>();
+    private Object lock = new Object();
 
     public static Server getInstance(){
         if (server==null){
@@ -24,16 +34,37 @@ public class Server {
 
     // TODO: 2023-05-18 template method är en pattern som vi kan använda oss av för add product
     //  och remove. Ex) att vi ska logga den. Kolla lab1.
-    // TODO: 2023-05-18 Proxy pattern seminar 3 part 2.  
+    // TODO: 2023-05-18 Proxy pattern seminar 3 part 2.
 
     public String addProduct(Product product){
-        productHashMap.put(product.id, product);
+        productHashMap.put(product.productId, product);
 
         return "The product have been added to MaHub";
     }
 
-    public Product removeProduct(String id){
-        return productHashMap.remove(id);
+    public Product removeProduct(String productId){
+        return productHashMap.remove(productId);
+    }
+
+    public void sellProduct(String productId){
+        productHashMap.get(productId).status = "sold";
+    }
+
+    public String[] getMessages(int userId){
+        synchronized (lock){
+            while(message.get(userId) == null){
+                try {
+                    lock.wait();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+
+    public void buyRequest(){
+
     }
 
     public Product[] getProducts (int offset){
@@ -46,13 +77,62 @@ public class Server {
                offsetCounter--;
                continue;
             }
-            temp[counter++] = productHashMap.get(key);
+            Product product = productHashMap.get(key);
+            if(product.status.equals("available")){
+                temp[counter++] = product;
+            }
             if (counter == temp.length){
                 break;
             }
         }
 
         return temp;
+    }
+
+
+    // TODO: 2023-05-19 Skriva klart metoden, fixa if satsen med ifall price och condition är null.
+    public Product[] searchProduct(String name, double priceRangeMin, double priceRangeMax, String condition){
+        ArrayList<Product> temp = new ArrayList<>();
+
+        for (String key: productHashMap.keySet()) {
+            Product product = productHashMap.get(key);
+            if(product.productName.equalsIgnoreCase(name)
+                    && product.price <= priceRangeMax
+                    && product.price>= priceRangeMin
+                    && product.condition.equalsIgnoreCase(condition)
+                    && product.status.equals("available")){
+
+            }
+        }
+
+        return null;
+    }
+
+    public String registerNewUser(User newUser){
+        boolean ok = true;
+        for (User user: users) {
+            if(user.email.equalsIgnoreCase(newUser.email) || user.username.equalsIgnoreCase(newUser.username)){
+                ok = false;
+                return "Could not register user, change email and/or username";
+            }
+        }
+        if(ok){
+            newUser.userId = users.size();
+            users.add(newUser);
+            return "User have successfully been added";
+        }
+
+        return "Could not register user, change email and/or username";
+    }
+
+    public User login(String username, String password){
+        for (User user: users) {
+            if(user.username.equals(username) && user.password.equals(password)){
+                return user;
+            }
+        }
+
+        return null;
     }
 
     public String saveToFile(){
@@ -86,14 +166,14 @@ public class Server {
     public static void main(String[] args) {
         Server server = Server.getInstance();
         Product product = new Product();
-        product.id = "TestProduct1";
+        product.productId = "TestProduct1";
         product.productName = "Nintendo Switch";
         product.sellerName = "Max Tiderman";
         product.date = "2023-05-17";
         product.image = "https://www.netonnet.se/GetFile/ProductImagePrimary/gaming/spel-och-konsol/nintendo/nintendo-konsol/nintendo-switch-oled-model-white(1019708)_450564_14_Normal_Extra.jpg";
 
         Product product1 = new Product();
-        product1.id = "TestProduct2";
+        product1.productId = "TestProduct2";
         product1.productName = "Playstation 5";
         product1.sellerName = "Daniel Olsson";
         product1.date = "2023-05-01";
