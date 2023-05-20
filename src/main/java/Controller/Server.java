@@ -38,7 +38,7 @@ public class Server {
 
     // TODO: 2023-05-18 template method är en pattern som vi kan använda oss av för add product
     //  och remove. Ex) att vi ska logga den. Kolla lab1.
-    // TODO: 2023-05-18 Proxy pattern seminar 3 part 2.
+    // TODO: 2023-05-18 Proxy pattern seminar 3 part 2. lazy loading
     // TODO: 2023-05-19 Observer pattern
 
     public String addProduct(Product product){
