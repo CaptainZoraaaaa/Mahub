@@ -4,6 +4,7 @@ import Controller.Server;
 import Entity.ImageIcontester;
 import Entity.Login;
 import Entity.LoginError;
+import Entity.User;
 import com.google.gson.Gson;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
@@ -65,6 +66,10 @@ public class Main {
                 } else {
                     ctx.json(new LoginError());
                 }
+            }).get("/register", ctx -> {
+                Gson gson = new Gson();
+                User user = gson.fromJson(ctx.body().toString(), User.class);
+                ctx.json(server.registerNewUser(user));
             });
 
         } catch (Exception e){
