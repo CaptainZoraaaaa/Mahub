@@ -8,9 +8,10 @@
         <link rel="stylesheet" href="css/login.css">  
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="Javascript/Login.js"></script>
     </head>
     <body>
-        <script src="Javascript/button.js"></script>
+        
         <header>
             <nav class="navbar">
                 <a href="#" class="nav-branding">Mahub</a>
@@ -39,12 +40,11 @@
         <section>
             <div class="form-box">
                 <div class="form-value">
-                    <form action="">
                         <img src="images/icon" alt="" class="icon">
                         <div class="inputbox">
                             <img src="images/mail.png" alt="" class="small-img">
-                            <input type="email" name="email" id="email" required> 
-                            <label for="">Email</label>
+                            <input type="text" name="username" id="username" required> 
+                            <label for="">Username</label>
                         </div>
                         <div class="inputbox">
                             <img src="images/lock.png" alt="" class="small-img2">
@@ -52,14 +52,13 @@
                             <label for="">Password</label>
                         </div>
                         <!-- fixa en onclick -->
-                        <button onclick="">Login</button>
+                        <button onclick="login()">Login</button>
                         <div class="forget">
                             <label for="" class="rem-label">Remember me <input type="checkbox"><br><a href="#">Forgot Password?</a></label>
                         </div>
                         <div class="register">
                             <p>Dont have an account? <a href="Register.html" >Register here</a></p>
                         </div>
-                    </form>
                 </div>
             </div>
         </section>
