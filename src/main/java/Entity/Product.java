@@ -5,6 +5,7 @@ import java.util.Date;
 public class Product {
     public int productId;
     public String productName;
+    //seller name is used as id
     public String sellerName;
     public String buyerName;
     public double price;
