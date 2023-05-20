@@ -80,6 +80,49 @@ public class Main {
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(new Gson().toJson(response));
                 ctx.json(jsonNode);
+            }).post("/addProduct", ctx->{
+                //TODO: can we reuse Gson, Response and Objectmapper instead of creating a new one every time?
+                Gson gson = new Gson();
+                Product product = gson.fromJson(ctx.body().toString(), Product.class);
+                Response response = new Response();
+                response.message = server.addProduct(product);
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode jsonNode = objectMapper.readTree(new Gson().toJson(response));
+                ctx.json(jsonNode);
+            }).post("/removeProduct", ctx -> {
+                //TODO: Testa om dessa fungerar, addProduct, remove, sell och buy. Inga av dessa har testats, vilka ska ha response/inte ha response, har bara utgått från metoderna i server
+               /*
+                Gson gson = new Gson();
+                int productId = gson.fromJson(ctx.body().toString(), int.class);
+                Response response = new Response();
+                response.message = server.removeProduct(productId).toString();
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode jsonNode = objectMapper.readTree(new Gson().toJson(response));
+                ctx.json(jsonNode);
+                */
+                Gson gson = new Gson();
+                ObjectMapper objectMapper = new ObjectMapper();
+                Response response = new Response();
+
+                int productId = gson.fromJson(ctx.body(), int.class);
+                response.message = server.removeProduct(productId).toString();
+                String jsonResponse = objectMapper.writeValueAsString(response);
+                ctx.json(jsonResponse);
+
+            }).post("/sellProduct", ctx -> {
+                int productId = Integer.parseInt(ctx.queryParam("productId"));
+                String buyerName = ctx.queryParam("buyerName");
+
+                server.sellProduct(productId, buyerName);
+
+
+
+            }).post("/buyRequest", ctx -> {
+                int[] productIds = ctx.bodyAsClass(int[].class);
+                String buyerName = ctx.queryParam("buyerName");
+
+                server.buyRequest(productIds, buyerName);
+
             });
 
         } catch (Exception e){
