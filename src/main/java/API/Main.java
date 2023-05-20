@@ -38,6 +38,8 @@ public class Main {
 
             }).post("/addProduct", ctx->{
 
+            }).post("/signup",ctx->{
+                System.out.println(ctx.body());
             }).ws("/inbox/{id}", ws -> {
                 //offline meddelanden + ta emot userId
                 ws.onConnect(ctx -> {
