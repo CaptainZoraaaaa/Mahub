@@ -2,6 +2,9 @@ package API;
 
 import Controller.Server;
 import Entity.ImageIcontester;
+import Entity.Login;
+import Entity.LoginError;
+import com.google.gson.Gson;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.websocket.WsContext;
@@ -38,10 +41,11 @@ public class Main {
 
             }).post("/addProduct", ctx->{
 
-            }).ws("/inbox/{id}", ws -> {
+            }).ws("/inbox", ws -> {
                 //offline meddelanden + ta emot userId
                 ws.onConnect(ctx -> {
-                    String userid = ctx.pathParam("id");
+                    String userid = ctx.queryParam("userid");
+                    assert userid != null;
                     users.put(userid, ctx);
                 });
 
@@ -53,6 +57,14 @@ public class Main {
                 ws.onMessage(ctx -> {
 
                 });
+            }).get("/login", ctx ->{
+                Gson gson = new Gson();
+                Login login = gson.fromJson(ctx.body().toString(), Login.class);
+                if(server.login(login.username, login.password)){
+                    ctx.json(server.getUser(login.username));
+                } else {
+                    ctx.json(new LoginError());
+                }
             });
 
         } catch (Exception e){

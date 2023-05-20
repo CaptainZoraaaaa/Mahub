@@ -160,6 +160,10 @@ public class Server {
         return users.get(username).password.equals(password);
     }
 
+    public User getUser(String username){
+        return users.get(username);
+    }
+
     public String saveToFile(){
         Gson gson = new Gson();
         try(BufferedWriter bw = new BufferedWriter(new FileWriter("Products"))){
