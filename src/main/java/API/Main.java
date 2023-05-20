@@ -5,6 +5,7 @@ import Entity.ImageIcontester;
 import Entity.Login;
 import Entity.LoginError;
 import Entity.User;
+import Entity.Product;
 import com.google.gson.Gson;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
@@ -41,6 +42,48 @@ public class Main {
                 ctx.json(image);
 
             }).post("/addProduct", ctx->{
+                Product product = ctx.bodyAsClass(Product.class);
+                String msg = server.addProduct(product);
+                ctx.result(msg);
+
+            }).post("/removeProduct", ctx -> {
+                int productId = Integer.parseInt(ctx.body());
+                Product removedProduct = server.removeProduct(productId);
+                if(removedProduct != null){
+                    ctx.json(removedProduct);
+                } else{
+                    ctx.result("Product not found");
+                }
+
+            }).post("/sellProduct", ctx -> {
+                int productId = Integer.parseInt(ctx.queryParam("productId"));
+                String buyerName = ctx.queryParam("buyerName");
+
+                server.sellProduct(productId, buyerName);
+
+            }).post("/buyRequest", ctx -> {
+                int[] productIds = ctx.bodyAsClass(int[].class);
+                String buyerName = ctx.queryParam("buyerName");
+
+                server.buyRequest(productIds, buyerName);
+
+            }).get("/getItemsWithOffer", ctx -> {
+
+
+            }).get("/getProducts", ctx -> {
+
+
+            }).get("/getPurchaseHistory", ctx -> {
+
+
+            }).post("/searchProduct", ctx -> {
+
+
+            }).post("/registerUser", ctx -> {
+
+
+            }).post("/login", ctx -> {
+
 
             }).ws("/inbox", ws -> {
                 //offline meddelanden + ta emot userId
