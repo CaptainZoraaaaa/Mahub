@@ -24,7 +24,7 @@ public class Main {
                         it.anyHost();
                     });
                 });
-                config.staticFiles.add("/public", Location.CLASSPATH);
+                config.staticFiles.add("/Webbpage", Location.CLASSPATH);
             }).start(5500);
 
             app.get("/", ctx->{
@@ -41,6 +41,7 @@ public class Main {
             }).ws("/inbox/{id}", ws -> {
                 //offline meddelanden + ta emot userId
                 ws.onConnect(ctx -> {
+                    System.out.println(ctx.pathParam("id"));
                     String userid = ctx.pathParam("id");
                     users.put(userid, ctx);
                 });
@@ -51,7 +52,7 @@ public class Main {
 
                 //Skicka ut rå data så kan javascript hantera detta
                 ws.onMessage(ctx -> {
-
+                    System.out.println("hej");
                 });
             });
 
