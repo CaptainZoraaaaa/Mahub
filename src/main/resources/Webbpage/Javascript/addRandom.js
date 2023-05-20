@@ -1,5 +1,6 @@
 
 $(document).ready(function () {
+  console.log(sessionStorage.getItem('yoo'));
     getStart();
     document.getElementById("new-btn").addEventListener("click", () =>{
         getStart();

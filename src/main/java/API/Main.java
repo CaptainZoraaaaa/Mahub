@@ -28,7 +28,7 @@ public class Main {
                         it.anyHost();
                     });
                 });
-                config.staticFiles.add("/public", Location.CLASSPATH);
+                config.staticFiles.add("/Webbpage", Location.CLASSPATH);
             }).start(5500);
 
             app.get("/", ctx->{
@@ -42,6 +42,8 @@ public class Main {
 
             }).post("/addProduct", ctx->{
 
+            }).post("/signup",ctx->{
+                System.out.println(ctx.body());
             }).ws("/inbox", ws -> {
                 //offline meddelanden + ta emot userId
                 ws.onConnect(ctx -> {
