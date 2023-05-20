@@ -86,9 +86,9 @@ public class Main {
                 Product product = gson.fromJson(ctx.body().toString(), Product.class);
                 Response response = new Response();
                 response.message = server.addProduct(product);
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode jsonNode = objectMapper.readTree(new Gson().toJson(response));
-                ctx.json(jsonNode);
+                //ObjectMapper objectMapper = new ObjectMapper();
+                //JsonNode jsonNode = objectMapper.readTree(new Gson().toJson(response));
+                ctx.json(gson.toJson(response));
             }).post("/removeProduct", ctx -> {
                 //TODO: Testa om dessa fungerar, addProduct, remove, sell och buy. Inga av dessa har testats, vilka ska ha response/inte ha response, har bara utgått från metoderna i server
                /*
@@ -110,12 +110,9 @@ public class Main {
                 ctx.json(jsonResponse);
 
             }).post("/sellProduct", ctx -> {
-                int productId = Integer.parseInt(ctx.queryParam("productId"));
-                String buyerName = ctx.queryParam("buyerName");
-
-                server.sellProduct(productId, buyerName);
-
-
+                Gson gson = new Gson();
+                SellConfirmation sc = gson.fromJson(ctx.body(), SellConfirmation.class);
+                server.sellProduct(sc.productId, sc.buyerName);
 
             }).post("/buyRequest", ctx -> {
                 int[] productIds = ctx.bodyAsClass(int[].class);
