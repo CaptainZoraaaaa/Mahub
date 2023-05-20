@@ -131,18 +131,20 @@ public class Server {
     public Product[] searchProduct(String name, double priceRangeMin, double priceRangeMax, String condition){
         ArrayList<Product> temp = new ArrayList<>();
 
-        for (Integer key: productHashMap.keySet()) {
+        for (Integer key : productHashMap.keySet()) {
             Product product = productHashMap.get(key);
-            if(product.productName.equalsIgnoreCase(name)
-                    && product.price <= priceRangeMax
-                    && product.price>= priceRangeMin
-                    && product.condition.equalsIgnoreCase(condition)
-                    && product.status.equals("available")){
 
+            if (product.productName.equalsIgnoreCase(name)
+                    && (priceRangeMin == 0 || product.price >= priceRangeMin)
+                    && (priceRangeMax == 0 || product.price <= priceRangeMax)
+                    && (condition == null || product.condition.equalsIgnoreCase(condition))
+                    && product.status.equals("available")) {
+                temp.add(product);
             }
         }
 
-        return null;
+        Product[] result = new Product[temp.size()];
+        return temp.toArray(result);
     }
 
     public String registerNewUser(User newUser){

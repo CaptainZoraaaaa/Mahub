@@ -108,7 +108,44 @@ public class Main {
                 response.message = server.removeProduct(productId).toString();
                 String jsonResponse = objectMapper.writeValueAsString(response);
                 ctx.json(jsonResponse);
+            }).post("/products/add", ctx -> {
+                Gson gson = new Gson();
+                Product product = gson.fromJson(ctx.body(), Product.class);
 
+                String message = server.addProduct(product);
+
+                Response response = new Response();
+                response.message = message;
+
+                ctx.json(response);
+            }).post("/products/remove", ctx -> {
+                Gson gson = new Gson();
+                int productId = gson.fromJson(ctx.body(), int.class);
+
+                Product removedProduct = server.removeProduct(productId);
+
+                Response response = new Response();
+                response.message = (removedProduct != null) ? "Product removed successfully" : "Product not found";
+
+                ctx.json(response);
+            }).post("/products/sell", ctx -> {
+                Gson gson = new Gson();
+                SellRequest sellRequest = gson.fromJson(ctx.body(), SellRequest.class);
+
+                server.sellProduct(sellRequest.productId, sellRequest.buyerName);
+                Response response = new Response();
+                response.message = "Product sold successfully";
+                ctx.json(response);
+            }).post("/products/buy-request", ctx -> {
+                Gson gson = new Gson();
+                BuyRequest buyRequest = gson.fromJson(ctx.body(), BuyRequest.class);
+
+                server.buyRequest(buyRequest.productIds, buyRequest.buyerName);
+
+                Response response = new Response();
+                response.message = "Buy request submitted successfully";
+
+                ctx.json(response);
             }).post("/sellProduct", ctx -> {
                 Gson gson = new Gson();
                 SellConfirmation sc = gson.fromJson(ctx.body(), SellConfirmation.class);
