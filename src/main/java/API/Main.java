@@ -64,13 +64,13 @@ public class Main {
                 ws.onMessage(ctx -> {
 
                 });
-            }).get("/login", ctx ->{
+            }).post("/login", ctx ->{
                 Gson gson = new Gson();
                 Login login = gson.fromJson(ctx.body().toString(), Login.class);
                 if(server.login(login.username, login.password)){
-                    ctx.json(server.getUser(login.username));
+                    ctx.json(gson.toJson(server.getUser(login.username)));
                 } else {
-                    ctx.json(new LoginError());
+                    ctx.json(gson.toJson(new LoginError()));
                 }
             }).post("/register", ctx -> {
                 Gson gson = new Gson();
