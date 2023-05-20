@@ -1,10 +1,9 @@
 package API;
 
 import Controller.Server;
-import Entity.ImageIcontester;
-import Entity.Login;
-import Entity.LoginError;
-import Entity.User;
+import Entity.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
@@ -44,6 +43,11 @@ public class Main {
 
             }).post("/signup",ctx->{
                 System.out.println(ctx.body());
+                Response response = new Response();
+                response.message = "NICE DONE";
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode jsonNode = objectMapper.readTree(new Gson().toJson(response));
+                ctx.json(jsonNode);
             }).ws("/inbox", ws -> {
                 //offline meddelanden + ta emot userId
                 ws.onConnect(ctx -> {
@@ -68,10 +72,14 @@ public class Main {
                 } else {
                     ctx.json(new LoginError());
                 }
-            }).get("/register", ctx -> {
+            }).post("/register", ctx -> {
                 Gson gson = new Gson();
                 User user = gson.fromJson(ctx.body().toString(), User.class);
-                ctx.json(server.registerNewUser(user));
+                Response response = new Response();
+                response.message = server.registerNewUser(user);
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode jsonNode = objectMapper.readTree(new Gson().toJson(response));
+                ctx.json(jsonNode);
             });
 
         } catch (Exception e){
