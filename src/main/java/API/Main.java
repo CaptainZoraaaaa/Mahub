@@ -58,6 +58,13 @@ public class Main {
                     String userid = ctx.queryParam("userid");
                     assert userid != null;
                     users.put(userid, ctx);
+                    //check if their product that they are interested is available upon connection
+                    User user = server.getUser(userid);
+                    if (user.interestedProducts.interests.size() != 0){
+                        for (String productName:user.interestedProducts.interests) {
+                            server.checkInterestedProducts(productName);
+                        }
+                    }
                 });
 
                 ws.onClose(ctx -> {
@@ -116,9 +123,12 @@ public class Main {
                 SellConfirmation sc = gson.fromJson(ctx.body(), SellConfirmation.class);
                 server.sellProduct(sc.productId, sc.buyerName);
             }).post("/buyRequest", ctx -> {
-                int[] productIds = ctx.bodyAsClass(int[].class);
-                String buyerName = ctx.queryParam("buyerName");
-                server.buyRequest(productIds, buyerName);
+                //int[] productIds = ctx.bodyAsClass(int[].class);
+                //String buyerName = ctx.queryParam("buyerName");
+                BuyRequest buyRequest = gson.fromJson(ctx.body(), BuyRequest.class);
+                int[] productIds = buyRequest.productIds;
+                String buyerName = buyRequest.buyerName;
+                ctx.json(gson.toJson(new Response().message = server.buyRequest(productIds, buyerName)));
             }).get("/getProducts", ctx -> {
                 int offset = Integer.parseInt(ctx.queryParam("offset"));
                 Product[] products = server.getProducts(offset);
@@ -127,6 +137,9 @@ public class Main {
                 System.out.println("yes sir");
                 int id = Integer.parseInt(ctx.pathParam("id"));
                 ctx.json(gson.toJson(server.getProductById(id)));
+            }).post("/getPurchaseHistory", ctx -> {
+                PurchaseHistoryQuery phq = gson.fromJson(ctx.body(), PurchaseHistoryQuery.class);
+                ctx.json(gson.toJson(server.getPurchaseHistory(phq.username, phq.start, phq.end)));
             });
         } catch (Exception e){
             e.printStackTrace();
