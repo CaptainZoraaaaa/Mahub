@@ -19,6 +19,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Main {
     public static void main(String[] args) {
         try {
+            Gson gson = new Gson();
+            Response response = new Response();
+            ObjectMapper objectMapper = new ObjectMapper();
             Server server = Server.getInstance();
             ConcurrentHashMap<String, WsContext> users = new ConcurrentHashMap<>();
             Javalin app = Javalin.create(config -> {
@@ -30,26 +33,26 @@ public class Main {
                 config.staticFiles.add("/Webbpage", Location.CLASSPATH);
             }).start(5500);
 
-            app.get("/", ctx->{
+            app.get("/", ctx -> {
                 System.out.println("noice");
-            }).get("/testPage", ctx->{
+            });
+
+            app.get("/testPage", ctx -> {
                 System.out.println("testar");
                 File file = new File("Webbpage/images/webpic.jpg");
                 ImageIcontester image = new ImageIcontester();
                 image.s = file;
                 ctx.json(image);
+            });
 
-            }).post("/addProduct", ctx->{
-
-            }).post("/signup",ctx->{
+            app.post("/signup", ctx -> {
                 System.out.println(ctx.body());
-                Response response = new Response();
                 response.message = "NICE DONE";
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode jsonNode = objectMapper.readTree(new Gson().toJson(response));
+                JsonNode jsonNode = objectMapper.valueToTree(response);
                 ctx.json(jsonNode);
-            }).ws("/inbox", ws -> {
-                //offline meddelanden + ta emot userId
+            });
+
+            app.ws("/inbox", ws -> {
                 ws.onConnect(ctx -> {
                     String userid = ctx.queryParam("userid");
                     assert userid != null;
@@ -57,37 +60,36 @@ public class Main {
                 });
 
                 ws.onClose(ctx -> {
-
+                    String userid = ctx.queryParam("userid");
+                    assert userid != null;
+                    users.remove(userid);
                 });
 
-                //Skicka ut rå data så kan javascript hantera detta
                 ws.onMessage(ctx -> {
-
+                    String message = ctx.message();
+                    String userid = ctx.queryParam("userid");
+                    assert userid != null;
                 });
-            }).post("/login", ctx ->{
-                Gson gson = new Gson();
-                Login login = gson.fromJson(ctx.body().toString(), Login.class);
-                if(server.login(login.username, login.password)){
+            });
+
+            app.post("/login", ctx -> {
+                Login login = gson.fromJson(ctx.body(), Login.class);
+                if (server.login(login.username, login.password)) {
                     ctx.json(gson.toJson(server.getUser(login.username)));
                 } else {
                     ctx.json(gson.toJson(new LoginError()));
                 }
-            }).post("/register", ctx -> {
-                Gson gson = new Gson();
-                User user = gson.fromJson(ctx.body().toString(), User.class);
-                Response response = new Response();
+            });
+
+            app.post("/register", ctx -> {
+                User user = gson.fromJson(ctx.body(), User.class);
                 response.message = server.registerNewUser(user);
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode jsonNode = objectMapper.readTree(new Gson().toJson(response));
+                JsonNode jsonNode = objectMapper.valueToTree(response);
                 ctx.json(jsonNode);
             }).post("/addProduct", ctx->{
                 //TODO: can we reuse Gson, Response and Objectmapper instead of creating a new one every time?
-                Gson gson = new Gson();
                 Product product = gson.fromJson(ctx.body().toString(), Product.class);
-                Response response = new Response();
                 response.message = server.addProduct(product);
-                //ObjectMapper objectMapper = new ObjectMapper();
-                //JsonNode jsonNode = objectMapper.readTree(new Gson().toJson(response));
                 ctx.json(gson.toJson(response));
             }).post("/removeProduct", ctx -> {
                 //TODO: Testa om dessa fungerar, addProduct, remove, sell och buy. Inga av dessa har testats, vilka ska ha response/inte ha response, har bara utgått från metoderna i server
@@ -100,28 +102,19 @@ public class Main {
                 JsonNode jsonNode = objectMapper.readTree(new Gson().toJson(response));
                 ctx.json(jsonNode);
                 */
-                Gson gson = new Gson();
-                ObjectMapper objectMapper = new ObjectMapper();
-                Response response = new Response();
-
                 int productId = gson.fromJson(ctx.body(), int.class);
                 response.message = server.removeProduct(productId).toString();
                 String jsonResponse = objectMapper.writeValueAsString(response);
                 ctx.json(jsonResponse);
 
             }).post("/sellProduct", ctx -> {
-                Gson gson = new Gson();
                 SellConfirmation sc = gson.fromJson(ctx.body(), SellConfirmation.class);
                 server.sellProduct(sc.productId, sc.buyerName);
-
             }).post("/buyRequest", ctx -> {
                 int[] productIds = ctx.bodyAsClass(int[].class);
                 String buyerName = ctx.queryParam("buyerName");
-
                 server.buyRequest(productIds, buyerName);
-
             });
-
         } catch (Exception e){
             e.printStackTrace();
         }
