@@ -87,8 +87,8 @@ public class Main {
                 JsonNode jsonNode = objectMapper.valueToTree(response);
                 ctx.json(jsonNode);
             }).post("/addProduct", ctx->{
-                //TODO: can we reuse Gson, Response and Objectmapper instead of creating a new one every time?
                 Product product = gson.fromJson(ctx.body().toString(), Product.class);
+                product.status = "available";
                 response.message = server.addProduct(product);
                 ctx.json(gson.toJson(response));
             }).post("/removeProduct", ctx -> {
