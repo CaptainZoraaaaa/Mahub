@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="sv">
+    <head>
+        <title>Mahhub</title>
+        <meta charset="UTF-8">
+        <meta name="" content="width=device-width">
+        <link rel="stylesheet" href="css/burgerstyle.css"> 
+        <link rel="stylesheet" href="css/productInfo.css"> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="Javascript/productInfo.js"></script>
+    </head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="#" class="nav-branding">Mahub</a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link" id="home-btn">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="randomProduct.html" class="nav-link" id="new-btn">New</a>
+                </li>
+                <li class="nav-item">
+                    <a href="addProduct.html" class="nav-link">Add Product</a>
+                </li>
+                <li class="nav-item">
+                    <a href="Login.html" class="nav-link" id="login.btn">Login</a>
+                </li>
+            </ul>
+            <nav class="burger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </nav>
+        </nav>
+        <script src="Javascript/burger.js"></script>
+    </header>
+    
+    <div class="container">
+        <div class="middle_box">
+            <div id="image_area" class="left">
+            </div>
+            <div class="input">
+                <h2>Add Product</h2>
+                    
+                    <h1 for="" class="field" name="productName" id="productName"></h1>
+                    <h1 for="" id="date" name = "date" class="field"></h1>
+                    <h1 for="" class="field" name="price" id="price"></h1>
+                    
+                <Button class="btn" onclick="addToCart()">Add To Cart</Button>
+            </div>
+        </div>
+    </div>
+   
+</body>
+</html>

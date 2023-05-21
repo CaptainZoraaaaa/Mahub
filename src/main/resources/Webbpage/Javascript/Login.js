@@ -10,6 +10,8 @@ function login(){
       }).done(function(data1){
         console.log(data1);
         if(data!=null){
+            sessionStorage.setItem("firstName", data1.firstName);
+            sessionStorage.setItem("username", data1.username);
             window.location.href = "index.html";
         }
       });

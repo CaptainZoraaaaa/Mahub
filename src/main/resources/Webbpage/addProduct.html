@@ -42,17 +42,17 @@
                 </div>
                 <div class="input">
                     <h2>Add Product</h2>
-                    <Input type="file" class="field" id="file_chooser" ></Input>
-                    <input type="text" class="field" name="productName" id="name" placeholder="Title"  >
-                    <input type="date" id="date" name = "date" class="field" >
-                    <input type="text" class="field" name="" id="" placeholder="Price">
-                    <select name="quality" class="field" id="quality_box">
+                    <Input type="text" class="field" id="file_chooser" placeholder="Link To Image" required></Input>
+                    <input type="text" class="field" name="productName" id="name" placeholder="Title"  required>
+                    <input type="date" id="date" name = "date" class="field" required>
+                    <input type="number" class="field" name="price" id="price" placeholder="Price"required>
+                    <select name="quality" class="field" id="quality_box" required>
                         <option value="new">New</option>
                         <option value="Very Good">Very Good</option>
                         <option value="Good">Good</option>
                         <option value="CAPUT">CAPUT</option>
                     </select>
-                    <Input type="text" class="field" placeholder="Manufacturer"></Input>
+                    <Input type="text" class="field" name="color" placeholder="Color" required></Input>
                     <Button class="btn" onclick="createProduct()">Send</Button>
                 </div>
             </div>
