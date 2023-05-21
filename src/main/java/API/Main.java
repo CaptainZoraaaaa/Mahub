@@ -124,6 +124,7 @@ public class Main {
                 Product[] products = server.getProducts(offset);
                 ctx.json(gson.toJson(products));
             }).get("/getProduct/{id}", ctx -> {
+                System.out.println("yes sir");
                 int id = Integer.parseInt(ctx.pathParam("id"));
                 ctx.json(gson.toJson(server.getProductById(id)));
             });

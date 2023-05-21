@@ -8,8 +8,8 @@ $(document).ready(function () {
 });
 
 function showDetails(index){
-  console.log(recipeIds[index]);
-  window.location.href = 'prductInfo.html' + '?id=' + productIds[index]; 
+  console.log(productIds[index]);
+  window.location.href = 'productInfo.html' + '?id=' + productIds[index]; 
 } 
 
 function getStart(){
@@ -21,7 +21,7 @@ function getStart(){
     console.log(data);
     for(i=offset; i<data.length+offset; i++){
       $('#randomProduct').append('<div class="flex-item" id="d'+i+'" > <img src="'+data[i].image+'" alt="Image" id="img'+data.s+'"> <p id="p'+i+'">'+data[i].productName+'</p> <button type="button" onclick="showDetails('+i+')">Show details</button></div>');
-      productIds[i] = data[i].id;
+      productIds[i] = data[i].productId;
       offset++;
     }
   })

@@ -5,9 +5,10 @@
         <meta charset="UTF-8">
         <meta name="" content="width=device-width">
         <link rel="stylesheet" href="css/burgerstyle.css"> 
-        <link rel="stylesheet" href="css/homepage.css"> 
+        <link rel="stylesheet" href="css/productInfo.css"> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="Javascript/productInfo.js"></script>
     </head>
 <body>
     <header>
@@ -35,23 +36,22 @@
         </nav>
         <script src="Javascript/burger.js"></script>
     </header>
-  <main>
-    <div id="header">
-      <img id="logo" src="logo1.png">
+    
+    <div class="container">
+        <div class="middle_box">
+            <div id="image_area" class="left">
+            </div>
+            <div class="input">
+                <h2>Add Product</h2>
+                    
+                    <h1 for="" class="field" name="productName" id="productName"></h1>
+                    <h1 for="" id="date" name = "date" class="field"></h1>
+                    <h1 for="" class="field" name="price" id="price"></h1>
+                    
+                <Button class="btn" onclick="createProduct()">Add To Cart</Button>
+            </div>
+        </div>
     </div>
-    <div id="displayrecipe">
-      <div id="titlewithpicture">
-      <h1 id="recipetitle"></h1>
-      <img alt="Image 1" id="recipeimg">
-      <p id="recipesummary"></p>
-      </div>
-      <div id="ingredients">
-      <h3>Ingredients & Steps</h3>
-      <ul id="ingredientlist"></ul>
-      <ol id="steplist"></ol> 
-      <Button id="fatButton" onclick="login();">Create a matching playlist..</Button>
-      </div>
-    </div>
-  </main>
+   
 </body>
 </html>
