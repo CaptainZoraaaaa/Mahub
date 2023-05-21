@@ -11,17 +11,21 @@ image_input.addEventListener("change", function(){
 
 function createProduct (){
     var data = {};
-    data.file = $('[id="file_chooser"]').val();
-    data.name = $('[name="productName"]').val();
-    
+    data.productName = $('[name="productName"]').val();
+    data.sellerName = sessionStorage.getItem("user");
+    data.price = $('[name="price"]').val();
+    data.date = $('[id="date"]').val();
+    data.image = $('[id="file_chooser"]').val();
+    data.condition = $('[name="quality"]').val();
+    data.colour = $('[name="color"]').val();
+
     $.ajax({
         method:"POST",
         url:"http://localHost:5500/addProduct",
         data: JSON.stringify(data),
         headers: {"Accept": "application/Json"}
-    }).done({
-
-    })
-    console.log(data.file);
-    console.log(data.name);
+    }).done(function(data){
+        alert(data);
+    });
+ 
 }
