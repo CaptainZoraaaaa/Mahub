@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mahhub</title>
+        <meta charset="UTF-8">
+        <meta name="" content="width=device-width">
+        <link rel="stylesheet" href="css/burgerstyle.css"> 
+        <link rel="stylesheet" href="css/addPage.css"> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <nav class="navbar">
+                <a href="#" class="nav-branding">Mahub</a>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link" id="home-btn">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="randomProduct.html" class="nav-link" id="new-btn">New</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="addProduct.html" class="nav-link">Add Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="Login.html" class="nav-link" id="login.btn">Login</a>
+                    </li>
+                </ul>
+                <nav class="burger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </nav>
+            </nav>
+            <script src="Javascript/burger.js"></script>
+        </header>
+        <h1>Checkout</h1>
+
+        <form id="checkout-form">
+            <div id="cart-items">
+                <!-- Dynamically generated cart items will be inserted here -->
+            </div>
+    
+            <div id="total-price">Total Price: $0</div>
+    
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+            </div>
+    
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+    
+            <div>
+                <label for="address">Address:</label>
+                <textarea id="address" required></textarea>
+            </div>
+    
+            <div>
+                <button type="submit">Place Order</button>
+            </div>
+        </form>
+    </body>
+</html>
