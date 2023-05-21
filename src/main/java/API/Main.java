@@ -58,6 +58,13 @@ public class Main {
                     String userid = ctx.queryParam("userid");
                     assert userid != null;
                     users.put(userid, ctx);
+                    //check if their product that they are interested is available upon connection
+                    User user = server.getUser(userid);
+                    if (user.interestedProducts.interests.size() != 0){
+                        for (String productName:user.interestedProducts.interests) {
+                            server.checkInterestedProducts(productName);
+                        }
+                    }
                 });
 
                 ws.onClose(ctx -> {
@@ -126,6 +133,9 @@ public class Main {
             }).get("/getProduct/{id}", ctx -> {
                 int id = Integer.parseInt(ctx.pathParam("id"));
                 ctx.json(gson.toJson(server.getProductById(id)));
+            }).post("/getPurchaseHistory", ctx -> {
+                PurchaseHistoryQuery phq = gson.fromJson(ctx.body(), PurchaseHistoryQuery.class);
+                ctx.json(gson.toJson(server.getPurchaseHistory(phq.username, phq.start, phq.end)));
             });
         } catch (Exception e){
             e.printStackTrace();

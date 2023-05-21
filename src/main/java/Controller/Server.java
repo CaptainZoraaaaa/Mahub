@@ -156,8 +156,10 @@ public class Server {
     }
 
     // TODO: 2023-05-21 Fixa så att om usern är offline så läggs den någonstans temporärt. Likt chatten.
+    // TODO: 2023-05-21 Update: Det det gör just nu är bara att den kollar och skickar för de som är inloggade
+    //  De som inte är inloggade kommer ej att få något förens de loggar in. Och då är det onConnect som körs och löser det .
     public void checkInterestedProducts(String newProductName){
-        for (String user: users.keySet()) {
+        for (String user: usersConnected.keySet()) {
             for (String interestProductName : users.get(user).interestedProducts.interests) {
                 if (newProductName.equalsIgnoreCase(interestProductName)){
                     usersConnected.get(user).send(interestProductName + " is now available on MaHub");
