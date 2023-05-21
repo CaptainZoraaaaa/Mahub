@@ -1,5 +1,7 @@
 package Entity;
 
+import java.util.List;
+
 public class User {
     public String firstName;
     public String lastName;
@@ -8,6 +10,6 @@ public class User {
     //username = userid
     public String username;
     public String password;
-    public String[] interestedProducts;
+    public Interests interestedProducts;
 
 }
