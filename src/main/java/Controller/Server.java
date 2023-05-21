@@ -68,7 +68,7 @@ public class Server {
         }
     }
 
-    public void buyRequest(int[] productIds, String buyerName){
+    public String buyRequest(int[] productIds, String buyerName){
         for (int productId: productIds) {
             Product product = productHashMap.get(productId);
             String userId = productHashMap.get(productId).sellerName;
@@ -80,6 +80,7 @@ public class Server {
                 buyRequestsToSeller.get(userId).add(product);
             }
         }
+        return "Buy request sent";
     }
 
     // TODO: Kolla så att Lazy Loading fungerar - Linus 21/5
