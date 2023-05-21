@@ -24,6 +24,7 @@ public class Main {
             ObjectMapper objectMapper = new ObjectMapper();
             Server server = Server.getInstance();
             ConcurrentHashMap<String, WsContext> users = new ConcurrentHashMap<>();
+            server.usersConnected = users;
             Javalin app = Javalin.create(config -> {
                 config.plugins.enableCors(cors -> {
                     cors.add(it -> {
@@ -65,10 +66,14 @@ public class Main {
                     users.remove(userid);
                 });
 
+                //Sending an array of interests
                 ws.onMessage(ctx -> {
                     String message = ctx.message();
+                    Interests interests = gson.fromJson(message, Interests.class);
                     String userid = ctx.queryParam("userid");
                     assert userid != null;
+                    User user = server.getUser(userid);
+                    user.interestedProducts = interests;
                 });
             });
 
@@ -118,6 +123,9 @@ public class Main {
                 int offset = Integer.parseInt(ctx.queryParam("offset"));
                 Product[] products = server.getProducts(offset);
                 ctx.json(gson.toJson(products));
+            }).get("/getProduct/{id}", ctx -> {
+                int id = Integer.parseInt(ctx.pathParam("id"));
+                ctx.json(gson.toJson(server.getProductById(id)));
             });
         } catch (Exception e){
             e.printStackTrace();

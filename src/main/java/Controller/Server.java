@@ -5,6 +5,7 @@ import Entity.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.javalin.http.sse.SseClient;
+import io.javalin.websocket.WsContext;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -28,6 +29,7 @@ public class Server {
     private HashMap<String, ArrayList<Product>> buyRequestsToSeller = new HashMap<>();
     //Username and their purchase history
     private HashMap<String, ArrayList<Product>> purchaseHistory = new HashMap<>();
+    public ConcurrentHashMap<String, WsContext> usersConnected;
 
     public static Server getInstance(){
         if (server==null){
@@ -90,6 +92,10 @@ public class Server {
     }
 
     // TODO: Kolla så att Lazy Loading fungerar - Linus 21/5
+    // TODO: 2023-05-21 Lazy loading funkar, den kräver dock en proxy
+    //  för den. Så skapa en EProduxt med product id, name och bild. Så är det
+    //  det som skickas till hemsidan. Och om den vill ha hela produkten så laddar den in
+    //  den när man klickar in på den
     public Product[] getProducts(int offset) {
         ArrayList<Product> temp = new ArrayList<>();
         int counter = 0;
@@ -111,6 +117,10 @@ public class Server {
         }
 
         return temp.toArray(new Product[0]);
+    }
+
+    public Product getProductById(int id){
+        return productHashMap.get(id);
     }
 
     public Product[] getPurchaseHistory(String username, Date start, Date end){
@@ -143,6 +153,17 @@ public class Server {
         }
 
         return temp.toArray(new Product[0]);
+    }
+
+    // TODO: 2023-05-21 Fixa så att om usern är offline så läggs den någonstans temporärt. Likt chatten.
+    public void checkInterestedProducts(String newProductName){
+        for (String user: users.keySet()) {
+            for (String interestProductName : users.get(user).interestedProducts.interests) {
+                if (newProductName.equalsIgnoreCase(interestProductName)){
+                    usersConnected.get(user).send(interestProductName + " is now available on MaHub");
+                }
+            }
+        }
     }
 
     public String registerNewUser(User newUser){
