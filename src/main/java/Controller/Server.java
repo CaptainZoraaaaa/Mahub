@@ -1,22 +1,19 @@
 package Controller;
 
+import Entity.IProduct;
 import Entity.Product;
+import Entity.ProductProxy;
 import Entity.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import io.javalin.http.sse.SseClient;
 import io.javalin.websocket.WsContext;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 
 public class Server {
@@ -30,6 +27,8 @@ public class Server {
     //Username and their purchase history
     private HashMap<String, ArrayList<Product>> purchaseHistory = new HashMap<>();
     public ConcurrentHashMap<String, WsContext> usersConnected;
+    private LinkedList<IProduct> proxyProducts = new LinkedList<>();
+    private Object proxyLock = new Object();
 
     public static Server getInstance(){
         if (server==null){
@@ -46,6 +45,10 @@ public class Server {
     public String addProduct(Product product){
         product.productId = productHashMap.size();
         productHashMap.put((product.productId), product);
+        ProductProxy productProxy = new ProductProxy(product.productId, product.productName, product.image);
+        synchronized (proxyLock){
+            proxyProducts.addLast(productProxy);
+        }
         return "The product have been added to MaHub";
     }
 
@@ -120,6 +123,31 @@ public class Server {
         }
 
         return temp.toArray(new Product[0]);
+    }
+    public ProductProxy[] getProxyProducts(int offset) {
+        ArrayList<ProductProxy> temp = new ArrayList<>();
+        int counter = 0;
+        int offsetCounter = offset;
+
+        synchronized (proxyLock){
+            for (IProduct product : proxyProducts) {
+                if (offsetCounter > 0) {
+                    offsetCounter--;
+                    continue;
+                }
+
+                if(productHashMap.get(((ProductProxy) product).productId).status.equals("available")){
+                    temp.add((ProductProxy) product);
+                    counter++;
+                }
+
+                if (counter == proxyProducts.size() || counter == 9) {
+                    break;
+                }
+            }
+        }
+
+        return temp.toArray(new ProductProxy[0]);
     }
 
     public Product getProductById(int id){

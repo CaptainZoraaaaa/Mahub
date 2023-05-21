@@ -3,10 +3,10 @@ package Entity;
 import java.util.Date;
 
 public class ProductProxy implements IProduct{
-    Product realProduct;
-    int productId;
-    String productName;
-    String image;
+    public Product realProduct;
+    public int productId;
+    public String productName;
+    public String image;
 
     public ProductProxy(int productId, String productName, String image) {
         this.productId = productId;

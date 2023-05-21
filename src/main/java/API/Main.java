@@ -134,7 +134,8 @@ public class Main {
                 ctx.json(gson.toJson(new Response().message = server.buyRequest(productIds, buyerName)));
             }).get("/getProducts", ctx -> {
                 int offset = Integer.parseInt(ctx.queryParam("offset"));
-                Product[] products = server.getProducts(offset);
+                //Product[] products = server.getProducts(offset);
+                ProductProxy[] products = server.getProxyProducts(offset);
                 ctx.json(gson.toJson(products));
             }).get("/getProduct/{id}", ctx -> {
                 int id = Integer.parseInt(ctx.pathParam("id"));
