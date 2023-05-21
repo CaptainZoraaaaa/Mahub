@@ -80,37 +80,37 @@ public class Server {
         }
     }
 
-    public Product[] getItemsWithOffer(String username){
+    // TODO: Kolla så att Lazy Loading fungerar - Linus 21/5
+    public Product[] getItemsWithOffer(String username) {
         ArrayList<Product> temp = buyRequestsToSeller.get(username);
-        Product[] products = new Product[temp.size()];
-        int i=0;
-        for (Product product:temp) {
-            products[i++]=product;
+        if (temp == null) {
+            return new Product[0];  // Return an empty array if no items found
         }
-
-        return products;
+        return temp.toArray(new Product[0]);
     }
 
-    public Product[] getProducts (int offset){
-        Product[] temp = new Product[9];
+    // TODO: Kolla så att Lazy Loading fungerar - Linus 21/5
+    public Product[] getProducts(int offset) {
+        ArrayList<Product> temp = new ArrayList<>();
         int counter = 0;
         int offsetCounter = offset;
 
-        for (Integer key: productHashMap.keySet()) {
-            if(offsetCounter>0){
-               offsetCounter--;
-               continue;
+        for (Integer key : productHashMap.keySet()) {
+            if (offsetCounter > 0) {
+                offsetCounter--;
+                continue;
             }
             Product product = productHashMap.get(key);
-            if(product.status.equals("available")){
-                temp[counter++] = product;
+            if (product.status.equals("available")) {
+                temp.add(product);
+                counter++;
             }
-            if (counter == temp.length){
+            if (counter == 9) {
                 break;
             }
         }
 
-        return temp;
+        return temp.toArray(new Product[0]);
     }
 
     public Product[] getPurchaseHistory(String username, Date start, Date end){
@@ -127,22 +127,22 @@ public class Server {
     }
 
 
-    // TODO: 2023-05-19 Skriva klart metoden, fixa if satsen med ifall price och condition är null.
+    // TODO: Fixat - Linus
     public Product[] searchProduct(String name, double priceRangeMin, double priceRangeMax, String condition){
         ArrayList<Product> temp = new ArrayList<>();
 
-        for (Integer key: productHashMap.keySet()) {
+        for (Integer key : productHashMap.keySet()) {
             Product product = productHashMap.get(key);
-            if(product.productName.equalsIgnoreCase(name)
-                    && product.price <= priceRangeMax
-                    && product.price>= priceRangeMin
-                    && product.condition.equalsIgnoreCase(condition)
-                    && product.status.equals("available")){
-
+            if (product.productName.equalsIgnoreCase(name)
+                    && (priceRangeMin == 0 || product.price >= priceRangeMin)
+                    && (priceRangeMax == 0 || product.price <= priceRangeMax)
+                    && (condition == null || product.condition.equalsIgnoreCase(condition))
+                    && product.status.equals("available")) {
+                temp.add(product);
             }
         }
 
-        return null;
+        return temp.toArray(new Product[0]);
     }
 
     public String registerNewUser(User newUser){
