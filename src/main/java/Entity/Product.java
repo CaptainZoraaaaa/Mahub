@@ -2,7 +2,7 @@ package Entity;
 
 import java.util.Date;
 
-public class Product {
+public class Product implements IProduct{
     public int productId;
     public String productName;
     //seller name is used as id
@@ -19,5 +19,18 @@ public class Product {
     public String status;
     public Date datePurchased;
 
-
+    @Override
+    public void load(int productId, String productName, String sellerName, String buyerName, double price, String image, Date date, String condition, String colour, String status, Date datePurchased) {
+        this.productId = productId;
+        this.productName = productName;
+        this.sellerName = sellerName;
+        this.buyerName = buyerName;
+        this.price = price;
+        this.image = image;
+        this.date = date;
+        this.condition = condition;
+        this.colour = colour;
+        this.status = status;
+        this.datePurchased = datePurchased;
+    }
 }

@@ -97,6 +97,8 @@ public class Server {
     //  för den. Så skapa en EProduxt med product id, name och bild. Så är det
     //  det som skickas till hemsidan. Och om den vill ha hela produkten så laddar den in
     //  den när man klickar in på den
+
+    //TODO: Använda proxy istället för riktiga Product när man kan, framförallt när man läser in?
     public Product[] getProducts(int offset) {
         ArrayList<Product> temp = new ArrayList<>();
         int counter = 0;
