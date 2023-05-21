@@ -114,6 +114,10 @@ public class Main {
                 int[] productIds = ctx.bodyAsClass(int[].class);
                 String buyerName = ctx.queryParam("buyerName");
                 server.buyRequest(productIds, buyerName);
+            }).get("/getProducts", ctx -> {
+                int offset = Integer.parseInt(ctx.queryParam("offset"));
+                Product[] products = server.getProducts(offset);
+                ctx.json(gson.toJson(products));
             });
         } catch (Exception e){
             e.printStackTrace();
