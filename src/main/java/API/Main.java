@@ -20,7 +20,6 @@ public class Main {
     public static void main(String[] args) {
         try {
             Gson gson = new Gson();
-            Response response = new Response();
             ObjectMapper objectMapper = new ObjectMapper();
             Server server = Server.getInstance();
             ConcurrentHashMap<String, WsContext> users = new ConcurrentHashMap<>();
@@ -48,6 +47,7 @@ public class Main {
 
             app.post("/signup", ctx -> {
                 System.out.println(ctx.body());
+                Response response = new Response();
                 response.message = "NICE DONE";
                 JsonNode jsonNode = objectMapper.valueToTree(response);
                 ctx.json(jsonNode);
@@ -95,12 +95,14 @@ public class Main {
 
             app.post("/register", ctx -> {
                 User user = gson.fromJson(ctx.body(), User.class);
+                Response response = new Response();
                 response.message = server.registerNewUser(user);
                 JsonNode jsonNode = objectMapper.valueToTree(response);
                 ctx.json(jsonNode);
             }).post("/addProduct", ctx->{
                 Product product = gson.fromJson(ctx.body().toString(), Product.class);
                 product.status = "available";
+                Response response = new Response();
                 response.message = server.addProduct(product);
                 ctx.json(gson.toJson(response));
             }).post("/removeProduct", ctx -> {
@@ -115,6 +117,7 @@ public class Main {
                 ctx.json(jsonNode);
                 */
                 int productId = gson.fromJson(ctx.body(), int.class);
+                Response response = new Response();
                 response.message = server.removeProduct(productId).toString();
                 String jsonResponse = objectMapper.writeValueAsString(response);
                 ctx.json(jsonResponse);
@@ -139,6 +142,11 @@ public class Main {
             }).post("/getPurchaseHistory", ctx -> {
                 PurchaseHistoryQuery phq = gson.fromJson(ctx.body(), PurchaseHistoryQuery.class);
                 ctx.json(gson.toJson(server.getPurchaseHistory(phq.username, phq.start, phq.end)));
+            }).post("/getOffers", ctx -> {
+                Response response = gson.fromJson(ctx.body(), Response.class);
+                String userId = response.message;
+                Product[] productsWithOffer = server.getItemsWithOffer(userId);
+                ctx.json(gson.toJson(productsWithOffer));
             });
         } catch (Exception e){
             e.printStackTrace();
