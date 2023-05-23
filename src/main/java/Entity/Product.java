@@ -19,6 +19,20 @@ public class Product implements IProduct{
     public String status;
     public Date datePurchased;
 
+    // TODO: 2023-05-23 Remove constructors
+    public Product(String productName, String sellerName, double price, String image, Date date, String condition, String colour) {
+        this.productName = productName;
+        this.sellerName = sellerName;
+        this.price = price;
+        this.image = image;
+        this.date = date;
+        this.condition = condition;
+        this.colour = colour;
+    }
+
+    public Product() {
+    }
+
     @Override
     public void load(int productId, String productName, String sellerName, String buyerName, double price, String image, Date date, String condition, String colour, String status, Date datePurchased) {
         this.productId = productId;
