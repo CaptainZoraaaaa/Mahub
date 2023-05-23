@@ -1,36 +1,66 @@
+var listan = {} ;
 $(document).ready(function () {
-    let newOption = new Option('Option Text','Option Value');
-    const select = document.querySelector('select'); 
+    var array =[];
+    var user = {};
+    user.message = sessionStorage.getItem("username");
     select.addEventListener("change", function (){
         updateBuyer();
     });
-    select.add(newOption,undefined);
-    
-    
-    
-    $.ajax({
+
+
+
+      $.ajax({
         method: "POST",
-        url: "http://localHost:5500/register",
-        data: JSON.stringify(sessionStorage.getItem("username")),
+        url: "http://localHost:5500/getOffers",
+        data: JSON.stringify(user),
         headers: {"Accept": "application/Json"}
       }).done(function(data){
+        console.log(listan);
+        listan = data;
         
+        const select = document.querySelector('select'); 
+        data.forEach(element => {
+            var ok = true;
+            for (let i = 0; i < array.length; i++) {
+                if(element.productId == array[i]){
+                    ok = false;
+                }
+                
+            }
+          if(ok===true){
+                    let newOption = new Option(element.productName,element.productId);
+                    select.add(newOption,undefined);
+                    array[array.length] = element.productId;
+          }
+           
+        });
+        document.getElementById("img-left").src = data[0].image;
+        for(i= 0; i<data.length;i++){
+            if(data[0].productId == data[i].productId){
+                $('#list').append('<li>'+data[i].buyerName+' Want top buy!<button class="btn-accept"></button><button class="btn-reject"></button> </li>')
+            }
+        }
       });
-
-
-
       
-    document.getElementById("img-left").src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6erUYJRNBnfJi6Hxr-S-FWzlKf1AikfFx84-l3AW_iA&s";
-    for(i= 0; i<5;i++){
-        $('#list').append('<li>dasdasd  <button class="btn-accept"></button><button class="btn-reject"></button> </li>')
-    }
     
 })
 
 function updateBuyer(){
     $('#list').empty(); 
-    document.getElementById("img-left").src = "https://image.smythstoys.com/original/desktop/219919.jpg";
-    for(i= 0; i<2;i++){
-        $('#list').append('<li>dasdasd  <button class="btn-accept"></button><button class="btn-reject"></button> </li>')
+    var counter =-1
+    var e = document.getElementById("select");
+    var value = e.value;
+    //-------------------------------------------------------------------------------------------
+    for (let i = 0; i < listan.length; i++) {  
+        if(listan[i].productId ==value){
+            document.getElementById("img-left").src = listan[i].image
+            $('#list').append('<li>'+listan[i].buyerName+' Want top buy!<button class="btn-accept"></button><button class="btn-reject"></button> </li>');
+        }
     }
+    
+    
 }
+                    
+
+
+

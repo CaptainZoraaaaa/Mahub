@@ -76,11 +76,13 @@ public class Server {
             Product product = productHashMap.get(productId);
             String userId = productHashMap.get(productId).sellerName;
             product.buyerName = buyerName;
+            Product temp = new Product();
+            temp.clone(product.productId,product.productName,product.sellerName,product.buyerName,product.price,product.image,product.date,product.condition,product.colour,product.status,product.datePurchased);
             if(buyRequestsToSeller.get(userId) != null){
-                buyRequestsToSeller.get(userId).add(product);
+                buyRequestsToSeller.get(userId).add(temp);
             } else {
                 buyRequestsToSeller.put(userId, new ArrayList<>());
-                buyRequestsToSeller.get(userId).add(product);
+                buyRequestsToSeller.get(userId).add(temp);
             }
         }
         return "Buy request sent";
