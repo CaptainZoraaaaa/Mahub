@@ -29,9 +29,15 @@ function addToCart(){
     if (array != null) {
         array[array.length] = dataObject;
     }
-    console.log(array);
+    else{
+        array = [];
+        array[array.length] = dataObject;
+    }
+
     jsonArray = JSON.stringify(array);
     localStorage.setItem('jsonArray', jsonArray);
   
-    
+    array.forEach(element => {
+        console.log(element.productId);
+    });
 }
