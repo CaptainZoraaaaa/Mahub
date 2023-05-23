@@ -26,12 +26,12 @@ $(document).ready(function () {
 function addToCart(){
     var jsonArray = localStorage.getItem("jsonArray");
     var array = JSON.parse(jsonArray);
-    array[array.length] = dataObject;
-
+    if (array != null) {
+        array[array.length] = dataObject;
+    }
+    console.log(array);
     jsonArray = JSON.stringify(array);
     localStorage.setItem('jsonArray', jsonArray);
   
-    array.forEach(element => {
-        console.log(element.productId);
-    });
+    
 }
