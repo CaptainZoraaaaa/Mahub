@@ -50,12 +50,13 @@
         <div class="history-container">
             <span>Choose a time period to display purchases</span>
             <div class="datePicker-container">
-                <input type="date" id="date" class="dateInput" required>
-                <input type="date" id="date" class="dateInput" required>
-                <button class="dateBtn">Search</button> 
+                <input type="date" id="dateStart" class="dateInput" required>
+                <input type="date" id="dateEnd" class="dateInput" required>
+                <button onclick="search()" class="dateBtn">Search</button> 
             </div>
             <div class="historyList-container">
-                <ul class="historyList">
+                <ul id="historyList" class="historyList">
+                    <!--TODO: Ta bort dessa, när man hämtar data skapar nya via JS ge dem även class="history-item"
                     <li class="history-item">
                         <span>Date: 2023-05-24 Product: MacBook</span>
                     </li>
@@ -64,7 +65,7 @@
                     </li>
                     <li class="history-item">
                         <span>Date: 2023-05-22 Product: Max's sock</span>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
 
