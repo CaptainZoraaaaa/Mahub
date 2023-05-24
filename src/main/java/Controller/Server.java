@@ -211,6 +211,16 @@ public class Server {
             }
         }
     }
+    public String[] getInterests(String username) {
+        User tempUser = users.get(username);
+        ArrayList<String> tempInterests = (ArrayList<String>) tempUser.interestedProducts.interests;
+        return tempInterests.toArray(new String[tempInterests.size()]);
+    }
+    public String addInterest(String username, String interest){
+        User tempUser = users.get(username);
+        tempUser.interestedProducts.interests.add(interest);
+        return "Interest has been added";
+    }
 
     public String registerNewUser(User newUser){
         if(users.containsKey(newUser.username)) return "Could not register user, change username";
@@ -228,7 +238,8 @@ public class Server {
     }
 
     public User getUser(String username){
-        return users.get(username);
+        User tempUser = users.get(username);
+        return tempUser;
     }
 
     public String saveToFile(){
