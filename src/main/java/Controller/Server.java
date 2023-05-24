@@ -1,9 +1,6 @@
 package Controller;
 
-import Entity.IProduct;
-import Entity.Product;
-import Entity.ProductProxy;
-import Entity.User;
+import Entity.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.javalin.websocket.WsContext;
@@ -184,15 +181,15 @@ public class Server {
 
 
     // TODO: Fixat - Linus
-    public Product[] searchProduct(String name, double priceRangeMin, double priceRangeMax, String condition){
+    public Product[] searchProduct(SearchQuery searchQuery){
         ArrayList<Product> temp = new ArrayList<>();
 
         for (Integer key : productHashMap.keySet()) {
             Product product = productHashMap.get(key);
-            if (product.productName.equalsIgnoreCase(name)
-                    && (priceRangeMin == 0 || product.price >= priceRangeMin)
-                    && (priceRangeMax == 0 || product.price <= priceRangeMax)
-                    && (condition == null || product.condition.equalsIgnoreCase(condition))
+            if (product.productName.equalsIgnoreCase(searchQuery.name)
+                    && (searchQuery.priceRangeMin == 0 || product.price >= searchQuery.priceRangeMin)
+                    && (searchQuery.priceRangeMax == 0 || product.price <= searchQuery.priceRangeMax)
+                    && (searchQuery.condition == null || product.condition.equalsIgnoreCase(searchQuery.condition))
                     && product.status.equals("available")) {
                 temp.add(product);
             }
