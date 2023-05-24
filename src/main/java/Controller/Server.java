@@ -69,6 +69,7 @@ public class Server {
             purchaseHistory.put(buyerName, new ArrayList<>());
             purchaseHistory.get(buyerName).add(product);
         }
+        buyRequestsToSeller.get(product.sellerName).removeIf(temp -> temp.productId == product.productId);
         return "Product has been sold";
     }
     public String denyBuyRequest(int productId, String buyerName){
