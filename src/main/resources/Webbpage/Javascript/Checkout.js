@@ -13,6 +13,10 @@ $(document).ready(function () {
       var itemName = document.createElement('span');
       itemName.textContent = item.name;
       cartItem.appendChild(itemName);
+
+      var cost = document.createElement('span');
+      itemName.textContent = cost.name;
+      cartItem.appendChild(cost);
       
       cartContainer.appendChild(cartItem);
     });
