@@ -4,14 +4,15 @@
         <title>Mahhub</title>
         <meta charset="UTF-8">
         <meta name="" content="width=device-width">
-        <link rel="stylesheet" href="css/burgerstyle.css">
-        <link rel="stylesheet" href="css/login.css">  
+        <link rel="stylesheet" href="css/burgerstyle.css"> 
+        <link rel="stylesheet" href="css/purchaseHistory.css"> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-        <script src="Javascript/Login.js"></script>
+        <script src="Javascript/purchaseHistory.js"></script>
+        <!-- <script src="Javascript/webSocket.js"></script> -->
     </head>
     <body>
-        
+        <script src="Javascript/button.js"></script>
         <header>
             <nav class="navbar">
                 <a href="#" class="nav-branding">Mahub</a>
@@ -43,29 +44,32 @@
             </nav>
             <script src="Javascript/burger.js"></script>
         </header>
-        <section>
-            <div class="form-box">
-                <div class="form-value">
-                        <img src="images/icon" alt="" class="icon">
-                        <div class="inputbox">
-                            <img src="images/mail.png" alt="" class="small-img">
-                            <input type="text" name="username" id="username" required> 
-                            <label for="">Username</label>
-                        </div>
-                        <div class="inputbox">
-                            <img src="images/lock.png" alt="" class="small-img2">
-                            <input type="password" name="password" id="password" required> 
-                            <label for="">Password</label>
-                        </div>
-                        <!-- fixa en onclick -->
-                        <button onclick="login()">Login</button>
-                        <div class="forget">
-                            <label for="" class="rem-label">Remember me <input type="checkbox"><br><a href="#">Forgot Password?</a></label>
-                        </div>
-                        <div class="register">
-                            <p>Dont have an account? <a href="Register.html" >Register here</a></p>
-                        </div>
-                </div>
+        <h2>
+            Purchase History
+        </h2>
+        <div class="history-container">
+            <span>Choose a time period to display purchases</span>
+            <div class="datePicker-container">
+                <input type="date" id="dateStart" class="dateInput" required>
+                <input type="date" id="dateEnd" class="dateInput" required>
+                <button onclick="search()" class="dateBtn">Search</button> 
             </div>
-        </section>
+            <div class="historyList-container">
+                <ul id="historyList" class="historyList">
+                    <!--TODO: Ta bort dessa, när man hämtar data skapar nya via JS ge dem även class="history-item"
+                    <li class="history-item">
+                        <span>Date: 2023-05-24 Product: MacBook</span>
+                    </li>
+                    <li class="history-item">
+                        <span>Date: 2023-05-23 Product: Bonsai Tree</span>
+                    </li>
+                    <li class="history-item">
+                        <span>Date: 2023-05-22 Product: Max's sock</span>
+                    </li>-->
+                </ul>
+            </div>
+
+        </div>
+        
     </body>
+</html>

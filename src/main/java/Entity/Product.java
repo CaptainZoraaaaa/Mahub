@@ -30,6 +30,11 @@ public class Product implements IProduct{
         this.colour = colour;
     }
 
+    public Product(String productName, String sellerName) {
+        this.productName = productName;
+        this.sellerName = sellerName;
+    }
+
     public String clone(int productId, String productName, String sellerName, String buyerName, double price, String image, Date date, String condition, String colour, String status, Date datePurchased) {
         this.productId = productId;
         this.productName = productName;

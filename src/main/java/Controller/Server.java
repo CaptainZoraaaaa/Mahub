@@ -165,14 +165,18 @@ public class Server {
     }
 
     public Product[] getPurchaseHistory(String username, Date start, Date end){
-        ArrayList<Product> tenp = purchaseHistory.get(username);
-        Product[] products = new Product[tenp.size()];
+        System.out.println(start.toString());
+        System.out.println(end.toString());
+        ArrayList<Product> temp = purchaseHistory.get(username);
+        Product[] products = new Product[temp.size()];
         int i=0;
-        for (Product product:tenp) {
-            if(product.date.before(end) && product.date.after(start)){
+        for (Product product:temp) {
+            System.out.println(product.datePurchased.toString());
+            if(product.datePurchased.before(end) && product.datePurchased.after(start)){
                 products[i++]=product;
             }
         }
+        System.out.println(Arrays.toString(products));
 
         return products;
     }
