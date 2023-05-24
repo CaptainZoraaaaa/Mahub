@@ -1,7 +1,12 @@
 const socket= new WebSocket("ws://" + "localHost" + ":" + "5500" + "/inbox?userid="+sessionStorage.getItem("username"));
+var list = [];
+
 $(document).ready(function(){
     document.getElementById("btn2").addEventListener("click", ()=>{
         send();
+    })
+    document.getElementById("btn").addEventListener("click", ()=>{
+        add();
     })
     sessionStorage.setItem("socket",socket);
     socket.onopen = function(e) {
@@ -13,9 +18,13 @@ $(document).ready(function(){
 
 function send(){
     var data = {};
-    var list = ["Saab", "Volvo", "BMW"];
+    
     
     data.interests = list;
     var jsin = JSON.stringify(data);
     socket.send(jsin);
+}
+function add(){
+    list[list.length]=$('#text').val();
+    console.log(list);
 }

@@ -38,7 +38,7 @@ $(document).ready(function () {
         for(i= 0; i<data.length;i++){
             if(data[0].productId == data[i].productId){
                 var name = data[i].buyerName;
-                $('#list').append('<li class="buyer-li"><span class="text-container">'+data[i].buyerName+' has made an offer to buy your product!</span><div class="button-container"><button class="btn-accept" onclick="acceptOffer('+i+')")></button><button class="btn-reject" onclick="rejectOffer('+i+')")></button></div></li>')
+                $('#list').append('<li class="buyer-li" id="li'+i+'"><span class="text-container">'+data[i].buyerName+' has made an offer to buy your product!</span><div class="button-container"><button class="btn-accept" onclick="acceptOffer('+i+')")></button><button class="btn-reject" onclick="rejectOffer('+i+')")></button></div></li>')
             }
         }
       });
@@ -56,7 +56,7 @@ function updateBuyer(){
     for (let i = 0; i < listan.length; i++) {  
         if(listan[i].productId ==value){
             document.getElementById("img-left").src = listan[i].image
-            $('#list').append('<li class="buyer-li"><span class="text-container">'+listan[i].buyerName+' has made an offer to buy your product!</span><div class="button-container"><button class="btn-accept" onclick="acceptOffer('+i+')")></button><button class="btn-reject" onclick="rejectOffer('+i+","+counter+')")></button></div></li>')
+            $('#list').append('<li class="buyer-li" id="li'+i+'"><span class="text-container">'+listan[i].buyerName+' has made an offer to buy your product!</span><div class="button-container"><button class="btn-accept" onclick="acceptOffer('+i+')")></button><button class="btn-reject" onclick="rejectOffer('+i+","+counter+')")></button></div></li>')
         }
     }
 }
@@ -93,9 +93,10 @@ function rejectOffer(index,counter){
         headers: {"Accept": "application/Json"}
       }).done(function(data){
         console.log(data);
-        var listElements = document.querySelectorAll("#list li");
-        li = listElements[counter]
-        li.parentNode.removeChild(li);
+        $("#li"+index).remove();
+        // var listElements = document.querySelectorAll("#list li");
+        // li = listElements[counter]
+        // li.parentNode.removeChild(li);
         
       });
 }
