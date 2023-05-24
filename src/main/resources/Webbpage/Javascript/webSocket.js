@@ -3,19 +3,8 @@ $(document).ready(function(){
     document.getElementById("btn2").addEventListener("click", ()=>{
         send();
     })
-    sessionStorage.setItem("socket",socket);
-    socket.onopen = function(e) {
-        alert("[open] Connection established");
-        alert("Sending to server");
-        
-    };
+    socket.onmessage = function (event){
+        console.log(event.data);
+        alert(event.data);
+    }
 });
-
-function send(){
-    var data = {};
-    var list = ["Saab", "Volvo", "BMW"];
-    
-    data.interests = list;
-    var jsin = JSON.stringify(data);
-    socket.send(jsin);
-}

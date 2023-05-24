@@ -49,6 +49,7 @@ public class Server {
         synchronized (proxyLock){
             proxyProducts.addLast(productProxy);
         }
+        checkInterestedProducts(product.productName);
         return "The product have been added to MaHub";
     }
 
@@ -202,6 +203,7 @@ public class Server {
         for (String user: usersConnected.keySet()) {
             for (String interestProductName : users.get(user).interestedProducts.interests) {
                 if (newProductName.equalsIgnoreCase(interestProductName)){
+                    System.out.println("yes");
                     usersConnected.get(user).send(interestProductName + " is now available on MaHub");
                 }
             }
