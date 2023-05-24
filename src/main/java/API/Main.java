@@ -9,12 +9,8 @@ import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.websocket.WsContext;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Main {
@@ -132,9 +128,12 @@ public class Main {
                 String jsonResponse = objectMapper.writeValueAsString(response);
                 ctx.json(jsonResponse);
 
-            }).post("/sellProduct", ctx -> {
+            }).post("/acceptBuyRequest", ctx -> {
                 SellConfirmation sc = gson.fromJson(ctx.body(), SellConfirmation.class);
-                server.sellProduct(sc.productId, sc.buyerName);
+                server.acceptBuyRequest(sc.productId, sc.buyerName);
+            }).post("/denyBuyRequest", ctx -> {
+                SellConfirmation sc = gson.fromJson(ctx.body(), SellConfirmation.class);
+                server.denyBuyRequest(sc.productId, sc.buyerName);
             }).post("/buyRequest", ctx -> {
                 //int[] productIds = ctx.bodyAsClass(int[].class);
                 //String buyerName = ctx.queryParam("buyerName");
