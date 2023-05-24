@@ -57,7 +57,7 @@ public class Server {
     }
 
     //From owner's client
-    public void acceptBuyRequest(int productId, String buyerName){
+    public String acceptBuyRequest(int productId, String buyerName){
         Product product = productHashMap.get(productId);
         product.status = "sold";
         product.buyerName = buyerName;
@@ -69,10 +69,12 @@ public class Server {
             purchaseHistory.put(buyerName, new ArrayList<>());
             purchaseHistory.get(buyerName).add(product);
         }
+        return "Product has been sold";
     }
-    public void denyBuyRequest(int productId, String buyerName){
+    public String denyBuyRequest(int productId, String buyerName){
         Product product = productHashMap.get(productId);
         buyRequestsToSeller.get(product.sellerName).removeIf(temp -> temp.productId == productId && temp.buyerName.equals(buyerName));
+        return "Buy request has been denied";
     }
 
     public String buyRequest(int[] productIds, String buyerName){

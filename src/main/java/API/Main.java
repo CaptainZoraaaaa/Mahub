@@ -131,10 +131,10 @@ public class Main {
 
             }).post("/acceptBuyRequest", ctx -> {
                 SellConfirmation sc = gson.fromJson(ctx.body(), SellConfirmation.class);
-                server.acceptBuyRequest(sc.productId, sc.buyerName);
+                ctx.json(gson.toJson(new Response().message = server.acceptBuyRequest(sc.productId, sc.buyerName)));
             }).post("/denyBuyRequest", ctx -> {
                 SellConfirmation sc = gson.fromJson(ctx.body(), SellConfirmation.class);
-                server.denyBuyRequest(sc.productId, sc.buyerName);
+                ctx.json(gson.toJson(new Response().message = server.denyBuyRequest(sc.productId, sc.buyerName)));
             }).post("/buyRequest", ctx -> {
                 //int[] productIds = ctx.bodyAsClass(int[].class);
                 //String buyerName = ctx.queryParam("buyerName");
