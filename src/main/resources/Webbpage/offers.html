@@ -5,9 +5,10 @@
         <meta charset="UTF-8">
         <meta name="" content="width=device-width">
         <link rel="stylesheet" href="css/burgerstyle.css"> 
-        <link rel="stylesheet" href="css/addPage.css"> 
+        <link rel="stylesheet" href="css/offers.css"> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="Javascript/offersSide.js"></script>
     </head>
     <body>
         <header>
@@ -18,7 +19,7 @@
                         <a href="index.html" class="nav-link" id="home-btn">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="randomProduct.html" class="nav-link" id="new-btn">New</a>
+                        <a href="#" class="nav-link" id="new-btn">New</a>
                     </li>
                     <li class="nav-item">
                         <a href="offers.html" class="nav-link" id="offer-btn">Offers</a>
@@ -38,28 +39,18 @@
             </nav>
             <script src="Javascript/burger.js"></script>
         </header>
+        <select name="quality" class="field" id="select">
         
-        <div class="container">
-            <div class="middle_box">
-                <div id="image_area" class="left">
-                </div>
-                <div class="input">
-                    <h2>Add Product</h2>
-                    <Input type="text" class="field" id="file_chooser" placeholder="Link To Image" required></Input>
-                    <input type="text" class="field" name="productName" id="name" placeholder="Title"  required>
-                    <input type="date" id="date" name = "date" class="field" required>
-                    <input type="number" class="field" name="price" id="price" placeholder="Price"required>
-                    <select name="quality" class="field" id="quality_box" required>
-                        <option value="new">New</option>
-                        <option value="Very Good">Very Good</option>
-                        <option value="Good">Good</option>
-                        <option value="CAPUT">CAPUT</option>
-                    </select>
-                    <Input type="text" class="field" name="color" placeholder="Color" required></Input>
-                    <Button class="btn" onclick="createProduct()">Send</Button>
-                </div>
+        </select>
+        <div class="flex-container">
+            <div class="left-field">
+                <img class="img-left" id="img-left" src="" alt="">
+            </div>
+            <div class="right-field">
+                <ul id="list">
+                     
+                </ul>
             </div>
         </div>
-        <script src="Javascript/newProduct.js"></script>
     </body>
 </html>
