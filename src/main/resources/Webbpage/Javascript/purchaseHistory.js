@@ -14,11 +14,7 @@ function search(){
         data: JSON.stringify(data),
         headers: {"Accept": "application/Json"}
     }).done(function(data1){
-        console.log(data1);
-        console.log(data1[0].datePurchased);
-
         for(i=0; i<data1.length; i++){
-            console.log(i);
             $('#historyList').append('<li class="history-item"><span>Date: '+data1[i].datePurchased+' Product: '+data1[i].productName + '</span></li>');
         }
     });

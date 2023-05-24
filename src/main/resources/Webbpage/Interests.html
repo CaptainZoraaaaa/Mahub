@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="" content="width=device-width">
         <link rel="stylesheet" href="css/burgerstyle.css">
-        <link rel="stylesheet" href="css/login.css">  
+        <link rel="stylesheet" href="css/Interests.css">  
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <script src="Javascript/productRequest.js"></script>
@@ -29,6 +29,9 @@
                         <a href="addProduct.html" class="nav-link">Add Product</a>
                     </li>
                     <li class="nav-item">
+                        <a href="Interests.html" class="nav-link">Interests</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="Login.html" class="nav-link" id="login.btn">Login</a>
                     </li>
                 </ul>
@@ -40,7 +43,18 @@
             </nav>
             <script src="Javascript/burger.js"></script>
         </header>
-        <input type="text" name="" id="text">
-        <button id="btn" onclick="add">Add</button>
-        <button id="btn2">send</button>
+        <h2>Product Interests</h2>
+        <div class="interests-container">
+            <div class="interest-search-container">
+                <input type="text" name="" id="text">
+                <button id="btn" onclick="add">Add</button>
+                <!--<button id="btn2">Send</button> -->
+            </div>
+            <ul id="interest-list">
+                <!--Remove these and fetch interest via js from backend to create the interest list-->
+                <li class="interest-item"><span>Interest</span></li>
+                <li class="interest-item"><span>Interest 2</span></li>
+            </ul>
+        </div>
+        
     </body>
