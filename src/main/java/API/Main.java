@@ -168,6 +168,9 @@ public class Main {
                 String userId = response.message;
                 Product[] productsWithOffer = server.getItemsWithOffer(userId);
                 ctx.json(gson.toJson(productsWithOffer));
+            }).post("/searchProduct", ctx -> {
+                SearchQuery searchQuery = gson.fromJson(ctx.body(), SearchQuery.class);
+                ctx.json(gson.toJson(server.searchProduct(searchQuery)));
             });
         } catch (Exception e){
             e.printStackTrace();
