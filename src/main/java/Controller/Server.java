@@ -44,6 +44,7 @@ public class Server {
 
     public String addProduct(Product product){
         product.productId = productHashMap.size();
+        product.status = "available";
         productHashMap.put((product.productId), product);
         ProductProxy productProxy = new ProductProxy(product.productId, product.productName, product.image);
         synchronized (proxyLock){
