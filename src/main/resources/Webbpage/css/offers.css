@@ -45,10 +45,18 @@ li{
     margin-right: auto;
     margin-left: auto;
 }
+.button-container{
+    display: flex;
+    gap: 5%;
+    margin-right: 1%;
+}
+.text-container{
+    flex: 1;
+    color: #FFFFFF;
+}
 .btn-accept{
     display: inline-block;
-    margin-left: 70%;
-    background: url('../images/accept.png') no-repeat center center;
+    background: url('../images/accept_new.png') no-repeat center center;
     background-size: cover;
     width: 35px;
     height: 35px;
@@ -61,8 +69,7 @@ li{
 }
 .btn-reject{
     display: inline-block;
-    margin-left: 2%;
-    background: url('../images/Screenshot_2022-11-20_at_09.34.27.jpg') no-repeat center center;
+    background: url('../images/Reject.png') no-repeat center center;
     background-size: cover;
     width: 35px;
     height: 35px;
@@ -78,4 +85,18 @@ li{
     justify-content: right;
     text-align: right;
     height: 100%;
+}
+.buyer-li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f2f2f236; /* Greyish background color */
+    border-radius: 10px; /* Rounded edges */
+    padding: 10px; /* Spacing around the content */
+    margin-bottom: 10px; /* Spacing between list items */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+.buyer-li:hover{
+    background-color: #e0e0e03d;
 }

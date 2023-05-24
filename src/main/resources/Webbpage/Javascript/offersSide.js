@@ -37,7 +37,7 @@ $(document).ready(function () {
         document.getElementById("img-left").src = data[0].image;
         for(i= 0; i<data.length;i++){
             if(data[0].productId == data[i].productId){
-                $('#list').append('<li>'+data[i].buyerName+' Want top buy!<button class="btn-accept"></button><button class="btn-reject"></button> </li>')
+                $('#list').append('<li class="buyer-li"><span class="text-container">'+data[i].buyerName+' has made an offer to buy your product!</span><div class="button-container"><button class="btn-accept"></button><button class="btn-reject"></button></div></li>')
             }
         }
       });
@@ -54,7 +54,7 @@ function updateBuyer(){
     for (let i = 0; i < listan.length; i++) {  
         if(listan[i].productId ==value){
             document.getElementById("img-left").src = listan[i].image
-            $('#list').append('<li>'+listan[i].buyerName+' Want top buy!<button class="btn-accept"></button><button class="btn-reject"></button> </li>');
+            $('#list').append('<li class="buyer-li"><span class="text-container">'+listan[i].buyerName+' has made an offer to buy your product!</span><div class="button-container"><button class="btn-accept"></button><button class="btn-reject"></button></div></li>')
         }
     }
     
