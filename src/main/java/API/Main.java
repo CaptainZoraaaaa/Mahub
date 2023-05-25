@@ -184,6 +184,9 @@ public class Main {
             }).post("/addInterest", ctx -> {
                 AddedInterest addedInterest = gson.fromJson(ctx.body(), AddedInterest.class);
                 ctx.json(gson.toJson(server.addInterest(addedInterest.userName, addedInterest.interest)));
+            }).post("/removeInterest", ctx -> {
+                AddedInterest addedInterest = gson.fromJson(ctx.body(), AddedInterest.class);
+                ctx.json(gson.toJson(server.removeInterest(addedInterest.userName, addedInterest.interest)));
             });
         } catch (Exception e){
             e.printStackTrace();

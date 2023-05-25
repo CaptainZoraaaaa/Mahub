@@ -222,6 +222,18 @@ public class Server {
         return "Interest has been added";
     }
 
+    /**
+     *
+     * Removes the first occurence of the interest String in the List
+     * Should be suitable as users have no reason to have duplicates of interests
+     *
+     */
+    public String removeInterest(String username, String interest){
+        User tempUser = users.get(username);
+        tempUser.interestedProducts.interests.remove(interest);
+        return "Interest has been removed";
+    }
+
     public String registerNewUser(User newUser){
         if(users.containsKey(newUser.username)) return "Could not register user, change username";
 

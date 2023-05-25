@@ -81,4 +81,19 @@ h2 {
   .interest-item span {
     color: #fff;
   }
+  .interestRmvBtn {
+    display: inline-block;
+    background: url('../images/Remove2.png') no-repeat center center;
+    background-size: cover;
+    filter: invert(1);
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+    transition: 0.4s ease-in-out;
+  }
+  .interestRmvBtn:hover {
+    transform: scale(110%);
+  }
   
