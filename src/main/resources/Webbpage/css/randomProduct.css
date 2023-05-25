@@ -8,20 +8,25 @@ body{
   .flex-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 -10px;
   }
   
   .flex-item {
-    max-width: 33%;
-    margin: auto;
-    padding-top: 3%;
-    text-align: center;
+      width: calc(33.33% - 20px);
+      margin: 10px;
+      padding: 20px;
+      background-color: #313131;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      text-align: center;
   }
   
   .flex-item img {
     
     width: 400px;
     height: 260px;
-    border: 3px solid #333;
+    border: 1px solid #333;
     border-top-left-radius: 6%;
     border-bottom-right-radius: 6%;
     transition: 0.5s ease-in-out;
@@ -31,14 +36,25 @@ body{
     cursor: pointer;
     transform: scale(105%);
   }
+  .img-btn {
+    padding: 8px 16px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #525252;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .img-btn:hover {
+    background-color: #838383;
+}
   
   .flex-item p {
     color: aliceblue;
-    font-size: 90%;
-    font-weight: 600;
-    margin-top: 1%;
-    overflow: hidden;
-    white-space: nowrap;
+    font-size: 18px;
+    margin-bottom: 10px;
+  
   }
   .search-container
   {
@@ -49,7 +65,9 @@ body{
     justify-content: center;
   }
   .search-bar{
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    padding: 14px;
     margin-left: auto;
     margin-right: auto;
     background-color: #333;
@@ -66,43 +84,37 @@ body{
     outline: none;  
   }
   .search-btn{
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.8);
-    background: rgb(44, 44, 44);
-    border-radius: 4px;
-    font-weight: normal;
-    text-transform: uppercase;
-    transition: all 0.2s ease-in-out;
+    display: inline-block;
+    background: url('../images/Search2.png') no-repeat center center;
+    background-size: cover;
+    filter: invert(1);
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+    transition: 0.4s ease-in-out;
   } 
   .searchimg{
     max-width: 40px;
     max-height: 30px;
   }
   .search-btn:hover{
-    color: rgba(255, 255, 255, 1);
-    box-shadow: 0 10px 15px rgba(255, 255, 255, 0.9);  
+    box-shadow: 0 0 20px #000000;
   }
   #loadMore-button {
-    padding: 4px;
-    background-color: #333;
+    padding: 8px 16px;
+    margin-left: 10px;
     border: none;
-    color: white; 
-    text-align: center; 
-    text-decoration: none; 
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 90%; 
+    border-radius: 4px;
+    background-color: #525252;
+    color: #fff;
     cursor: pointer;
-    transition: background-color 0.1s; 
-    transform: skew(10deg);
-    margin-top: 2%;
-    margin-bottom: 1%;
+    transition: background-color 0.3s ease;
 }
 
 #loadMore-button:hover {
-  background-color: white;
-  color: #333;
+  background-color: #838383;
 }
 
 #loadMore-button:active {
@@ -112,11 +124,13 @@ body{
   color: aliceblue;
 }
 .pricefield{
-    max-width: 100px;
+    width: 150px;
+    height: 30px;
     margin-top: 20px;
+    border-radius: 12px;
     border: none;
     outline: none;
-    background-color: transparent;
+    background-color: #333;
     color: #fff;
     text-align: center;
     justify-content: center;
@@ -128,10 +142,28 @@ input[type="number"]::-webkit-inner-spin-button{
 ::placeholder{
   color: aliceblue;
 }
-.input-container{
+.input-container {
+  display: flex;
   justify-content: center;
-  text-align: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.input-container label {
+  margin-right: 10px;
+  color: white;
+}
+
+.input-container select.field {
+  background-color: #444;
   color: #fff;
+  border: none;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  outline: none;
+  width: 200px;
 }
   
   
