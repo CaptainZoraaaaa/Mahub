@@ -9,6 +9,15 @@ $(document).ready(function () {
     array.forEach(function(item) {
       var cartItem = document.createElement('div');
       cartItem.className = 'cart-item';
+
+      var btn = document.createElement('button');
+      btn.className = 'remove-btn';
+      btn.onclick = function(){
+        var div = btn.parentNode;
+        var something = div.parentNode;
+        something.removeChild(div);
+      };
+      cartItem.appendChild(btn);
       
       var image = document.createElement('img');
       image.src = item.image;
@@ -18,15 +27,12 @@ $(document).ready(function () {
       itemName.className = 'item-name';
       itemName.textContent = item.productName;
       cartItem.appendChild(itemName);
-<<<<<<< Updated upstream
-=======
 
       var cost = document.createElement('div');
       cost.className = 'cost-class';
       cost.textContent = item.price;
       cartItem.appendChild(cost);
->>>>>>> Stashed changes
-      
+
       cartContainer.appendChild(cartItem);
     });
   });

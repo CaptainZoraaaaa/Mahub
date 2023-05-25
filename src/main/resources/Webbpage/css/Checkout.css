@@ -35,6 +35,20 @@
     border: 2px solid #fff;
   }
 
+  .remove-btn {
+    margin-left: 97.5%;
+    margin-top: 5px;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    background: url('../images/Remove2.png') no-repeat center center;
+    background-size: cover;
+    filter: invert(1);
+    border: none;
+    cursor: pointer;
+    transition: 0.4s ease-in-out;
+  }
+
   img {
     margin-top: 5%;
   }
