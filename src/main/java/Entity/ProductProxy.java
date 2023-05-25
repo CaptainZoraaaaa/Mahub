@@ -1,5 +1,7 @@
 package Entity;
 
+import Controller.Server;
+
 import java.util.Date;
 
 public class ProductProxy implements IProduct{
@@ -20,5 +22,11 @@ public class ProductProxy implements IProduct{
             realProduct = new Product();
         }
         realProduct.load(productId, productName, sellerName, buyerName, price, image, date, condition, colour, status, datePurchased);
+    }
+
+    public void load(Server server){
+        if(realProduct == null){
+            realProduct = server.getProductById(productId);
+        }
     }
 }
