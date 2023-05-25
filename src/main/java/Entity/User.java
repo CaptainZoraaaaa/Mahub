@@ -1,5 +1,6 @@
 package Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -20,6 +21,7 @@ public class User {
         this.email = email;
         this.username = username;
         this.password = password;
+        interestedProducts = new Interests(new ArrayList<>());
     }
 
     public User() {
