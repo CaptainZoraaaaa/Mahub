@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body styles */
+  body {
+    background-color: #2e2e2e;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    text-align: center;
+    padding: 20px;
+}
+  
+  /* Container styles */
+  .interests-container {
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Search container styles */
+  .interest-search-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Text input styles */
+  #text {
+    flex-grow: 1;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  /* Button styles */
+  #btn,
+  #btn2 {
+    padding: 8px 16px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #444;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #btn:hover,
+  #btn2:hover {
+    background-color: #666;
+  }
+  
+  /* Interest list styles */
+  #interest-list {
+    list-style-type: none;
+  }
+  
+  .interest-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  
+  .interest-item span {
+    color: #fff;
+  }
+  .interestRmvBtn {
+    display: inline-block;
+    background: url('../images/Remove2.png') no-repeat center center;
+    background-size: cover;
+    filter: invert(1);
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+    transition: 0.4s ease-in-out;
+  }
+  .interestRmvBtn:hover {
+    transform: scale(110%);
+  }
+  

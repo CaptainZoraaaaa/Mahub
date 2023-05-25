@@ -161,6 +161,15 @@ public class Server {
     public Product getProductById(int id){
         return productHashMap.get(id);
     }
+    public ProductProxy[] getLatestProducts(){
+        int numberOfProducts = 4;
+        LinkedList<ProductProxy> latestProducts = new LinkedList<>();
+        for (int i = proxyProducts.size()-1; i >=0 && numberOfProducts > 0; i--) {
+            latestProducts.addFirst((ProductProxy) proxyProducts.get(i));
+            numberOfProducts--;
+        }
+        return latestProducts.toArray(latestProducts.toArray(new ProductProxy[0]));
+    }
 
     public Product[] getPurchaseHistory(String username, Date start, Date end){
         System.out.println(start.toString());
@@ -211,6 +220,28 @@ public class Server {
             }
         }
     }
+    public String[] getInterests(String username) {
+        User tempUser = users.get(username);
+        ArrayList<String> tempInterests = (ArrayList<String>) tempUser.interestedProducts.interests;
+        return tempInterests.toArray(new String[tempInterests.size()]);
+    }
+    public String addInterest(String username, String interest){
+        User tempUser = users.get(username);
+        tempUser.interestedProducts.interests.add(interest);
+        return "Interest has been added";
+    }
+
+    /**
+     *
+     * Removes the first occurence of the interest String in the List
+     * Should be suitable as users have no reason to have duplicates of interests
+     *
+     */
+    public String removeInterest(String username, String interest){
+        User tempUser = users.get(username);
+        tempUser.interestedProducts.interests.remove(interest);
+        return "Interest has been removed";
+    }
 
     public String registerNewUser(User newUser){
         if(users.containsKey(newUser.username)) return "Could not register user, change username";
@@ -228,7 +259,8 @@ public class Server {
     }
 
     public User getUser(String username){
-        return users.get(username);
+        User tempUser = users.get(username);
+        return tempUser;
     }
 
     public String saveToFile(){
