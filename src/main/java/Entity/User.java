@@ -13,14 +13,13 @@ public class User {
     public Interests interestedProducts;
 
     // TODO: 2023-05-23 Remove constructors
-    public User(String firstName, String lastName, String dateOfBirth, String email, String username, String password, Interests interests) {
+    public User(String firstName, String lastName, String dateOfBirth, String email, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.username = username;
         this.password = password;
-        this.interestedProducts = interests;
     }
 
     public User() {

@@ -161,6 +161,15 @@ public class Server {
     public Product getProductById(int id){
         return productHashMap.get(id);
     }
+    public ProductProxy[] getLatestProducts(){
+        int numberOfProducts = 4;
+        LinkedList<ProductProxy> latestProducts = new LinkedList<>();
+        for (int i = proxyProducts.size()-1; i >=0 && numberOfProducts > 0; i--) {
+            latestProducts.addFirst((ProductProxy) proxyProducts.get(i));
+            numberOfProducts--;
+        }
+        return latestProducts.toArray(latestProducts.toArray(new ProductProxy[0]));
+    }
 
     public Product[] getPurchaseHistory(String username, Date start, Date end){
         System.out.println(start.toString());
