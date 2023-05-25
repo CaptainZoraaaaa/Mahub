@@ -12,7 +12,7 @@ section{
     align-items: center;
     min-height: 95vh;
     width: 100%;
-    background-image: url('../images/number_one');
+    background-image: url('../images/anime_cafe_by_lexex11_dfi57sr-fullview.png');
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -29,8 +29,8 @@ section{
     align-items: center;
 }
 .icon{
-    margin-top: 50px;
-    min-width: 120px;
+    margin-top: 10px;
+    min-width: 200px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -40,14 +40,14 @@ section{
     position: relative;
     margin: 30px 0;
     width: 310px;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid #000000;
 }
 .inputbox label{
     position: absolute;
     top: 50%;
     left: 5px;
     transform: translateY(-50%);
-    color: #fff;
+    color: #000000;
     font-size: 1em;
     pointer-events: none;
     transition: 0.5s;
