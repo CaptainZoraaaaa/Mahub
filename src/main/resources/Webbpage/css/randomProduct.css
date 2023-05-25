@@ -18,8 +18,9 @@ body{
   }
   
   .flex-item img {
-    width: 80%;
-    height: 50%;
+    
+    width: 400px;
+    height: 260px;
     border: 3px solid #333;
     border-top-left-radius: 6%;
     border-bottom-right-radius: 6%;
@@ -27,7 +28,8 @@ body{
 
   }
   img:hover {
-    transform: scale(110%);
+    cursor: pointer;
+    transform: scale(105%);
   }
   
   .flex-item p {

@@ -7,7 +7,7 @@ $(document).ready(function () {
     sendItems();
   });
   
-  getStart();
+  getMore();
 
 });
 
@@ -16,18 +16,20 @@ function showDetails(index){
   window.location.href = 'productInfo.html' + '?id=' + productIds[index]; 
 } 
 
-function getStart(){
+function getMore(){
+  var counter =0;
   $.ajax({
       method: "GET",
       url: "http://localHost:5500/getProducts/?offset="+offset,
       headers: {"Accept": "application/Json"}
   }).done(function (data){
-    console.log(data);
+    console.log(offset);
     for(i=offset; i<data.length+offset; i++){
-      $('#randomProduct').append('<div class="flex-item" id="d'+i+'" > <img src="'+data[i].image+'" alt="Image" id="img'+data.s+'"> <p id="p'+i+'">'+data[i].productName+'</p> <button type="button" onclick="showDetails('+i+')">Show details</button></div>');
-      productIds[i] = data[i].productId;
-      offset++;
+      $('#randomProduct').append('<div class="flex-item" id="d'+i+'" > <img src="'+data[counter].image+'"> <p id="p'+i+'">'+data[counter].productName+'</p> <button class="img-btn" type="button" onclick="showDetails('+i+')">Show details</button></div>');
+      productIds[i] = data[counter].productId;
+      counter++;
     }
+    offset=offset+9;
   });
 }
 
