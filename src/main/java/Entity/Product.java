@@ -1,5 +1,7 @@
 package Entity;
 
+import Controller.Server;
+
 import java.util.Date;
 
 public class Product implements IProduct{
@@ -66,5 +68,21 @@ public class Product implements IProduct{
         this.colour = colour;
         this.status = status;
         this.datePurchased = datePurchased;
+    }
+
+    @Override
+    public void load(Server server) {
+        Product product = server.getProductById(this.productId);
+        this.productId = product.productId;
+        this.productName = product.productName;
+        this.sellerName = product.sellerName;
+        this.buyerName = product.buyerName;
+        this.price = product.price;
+        this.image = product.image;
+        this.date = product.date;
+        this.condition = product.condition;
+        this.colour = product.colour;
+        this.status = product.status;
+        this.datePurchased = product.datePurchased;
     }
 }

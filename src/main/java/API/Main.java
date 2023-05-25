@@ -169,6 +169,10 @@ public class Main {
             }).get("/getProduct/{id}", ctx -> {
                 int id = Integer.parseInt(ctx.pathParam("id"));
                 ctx.json(gson.toJson(server.getProductById(id)));
+            }).post("/getProductDetails", ctx -> {
+                ProductProxy productProxy = gson.fromJson(ctx.body(), ProductProxy.class);
+                productProxy.load(server);
+                ctx.json(gson.toJson(productProxy.realProduct));
             }).get("/getLatest", ctx -> {
                 //TODO: fixa så att man kan hämta 4 senaste produkterna
                 ctx.json(gson.toJson(server.getLatestProducts()));
