@@ -7,55 +7,88 @@
   
   /* Global styles */
   body {
-    font-family: Arial, sans-serif;
-    background-color: #333;
+    background-color: #1c1c1c;
     color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
     padding: 20px;
-  }
-  
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-  }
-  
-  #cart-items {
-    background-color: #222;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-  }
+}
 
-  .cart-item {
-    background-color: #333;
-    margin: 5px;
-    border: 2px solid #fff;
-  }
+h1 {
+  margin-top: 10px;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
 
-  .remove-btn {
-    margin-left: 97.5%;
-    margin-top: 5px;
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
+#cart-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.cart-item {
+    width: 600px;
+    height: 250px;
+    background-color: #2b2b2b;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    padding: 10px;
+    position: relative;
+}
+
+.cart-item img {
+    width: 40%;
+    height: 80%;
+    border-radius: 10px;
+    object-fit: cover;
+    float: left;
+    margin-left: 2%;
+    margin-top: 5%;
+}
+
+.cart-item-info {
+    float: right;
+    width: 50%;
+    padding: 10px;
+}
+
+.remove-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     background: url('../images/Remove2.png') no-repeat center center;
-    background-size: cover;
-    filter: invert(1);
+    filter:invert();
+    color: #fff;
     border: none;
     cursor: pointer;
-    transition: 0.4s ease-in-out;
-  }
+}
 
-  img {
-    margin-top: 5%;
-  }
+.item-name {
+  position: absolute;
+  top: 100px;
+  left: 300px;
+  border-bottom: 2px solid white;
+}
 
-  .item-name {
-    font-size: 40px;
-  }
+.cost-class {
+  position: absolute;
+  top: 130px;
+  left: 300px;
+  border-bottom: 2px solid white;
+}
+
+button {
+    background-color: #4a4a4a;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+  background-color: #9b9b9b;
+}
   
   /* Burger menu styles */
   .burger {

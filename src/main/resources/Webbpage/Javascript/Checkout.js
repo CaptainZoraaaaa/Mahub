@@ -33,14 +33,14 @@ $(document).ready(function () {
       image.src = item.image;
       cartItem.appendChild(image);
       
-      var itemName = document.createElement('div');
+      var itemName = document.createElement('span');
       itemName.className = 'item-name';
-      itemName.textContent = item.productName;
+      itemName.textContent = "Product: "+item.productName;
       cartItem.appendChild(itemName);
 
-      var cost = document.createElement('div');
+      var cost = document.createElement('span');
       cost.className = 'cost-class';
-      cost.textContent = item.price;
+      cost.textContent = "Price: "+item.price+ " $";
       cartItem.appendChild(cost);
 
       counter++;
