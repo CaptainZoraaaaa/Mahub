@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mahhub</title>
+        <meta charset="UTF-8">
+        <meta name="" content="width=device-width">
+        <link rel="stylesheet" href="css/burgerstyle.css">
+        <link rel="stylesheet" href="css/Interests.css">  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="Javascript/Interests.js"></script>
+        <script src="Javascript/socketReciever.js"></script>
+    </head>
+    <body>
+        
+        <header>
+            <nav class="navbar">
+                <a href="#" class="nav-branding">MaHub</a>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link" id="home-btn">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="randomProduct.html" class="nav-link" id="new-btn">New</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="offers.html" class="nav-link" id="offer-btn">Offers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="addProduct.html" class="nav-link">Add Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="Interests.html" class="nav-link">Interests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="Login.html" class="nav-link" id="login.btn">Login</a>
+                    </li>
+                </ul>
+                <nav class="burger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </nav>
+            </nav>
+            <script src="Javascript/burger.js"></script>
+        </header>
+        <h2>Product Interests</h2>
+        <div class="interests-container">
+            <div class="interest-search-container">
+                <input type="text" name="" id="text">
+                <button id="btn" onclick="addInterest()">Add</button>
+                <!--<button id="btn2">Send</button> -->
+                
+            </div>
+            <ul id="interest-list">
+                <li class="interest-item"><span>Template interest</span><button class="interestRmvBtn" onclick="removeInterest(this)"></button></li>
+            </ul>
+        </div>
+        
+    </body>

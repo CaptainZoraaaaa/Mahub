@@ -21,7 +21,16 @@
                         <a href="randomProduct.html" class="nav-link" id="new-btn">New</a>
                     </li>
                     <li class="nav-item">
+                        <a href="offers.html" class="nav-link" id="offer-btn">Offers</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="addProduct.html" class="nav-link">Add Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="purchaseHistory.html" class="nav-link" id="purchaseHistory.btn">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="Interests.html" class="nav-link">Interests</a>
                     </li>
                     <li class="nav-item">
                         <a href="Checkout.html" class="nav-link">Checkout</a>
@@ -45,17 +54,35 @@
                 </div>
                 <div class="input">
                     <h2>Add Product</h2>
-                    <Input type="text" class="field" id="file_chooser" placeholder="Link To Image" required></Input>
-                    <input type="text" class="field" name="productName" id="name" placeholder="Title"  required>
-                    <input type="date" id="date" name = "date" class="field" required>
-                    <input type="number" class="field" name="price" id="price" placeholder="Price"required>
-                    <select name="quality" class="field" id="quality_box" required>
-                        <option value="new">New</option>
-                        <option value="Very Good">Very Good</option>
-                        <option value="Good">Good</option>
-                        <option value="CAPUT">CAPUT</option>
+                    <div class="input-container">
+                        <label>Image Link</label>
+                        <Input type="text" class="field" id="file_chooser" required></Input>
+                    </div>
+                    <div class="input-container">
+                        <label>Product Name</label>
+                        <input type="text" class="field" name="productName" id="name" required>
+                    </div>
+                    <div class="input-container">
+                        <label>Date</label>
+                        <input type="date" id="date" name = "date" class="field" required>
+                    </div>
+                    <div class="input-container">
+                        <label>Price</label>
+                        <input type="number" class="field" name="price" id="price" required>
+                    </div>
+                    <div class="input-container">
+                        <label>Quality</label>
+                        <select name="quality" class="field" id="quality_box" required>
+                        <option class="option" value="new">New</option>
+                        <option class="option" value="Very Good">Very Good</option>
+                        <option class="option" value="Good">Good</option>
+                        <option class="option" value="CAPUT">CAPUT</option>
                     </select>
-                    <Input type="text" class="field" name="color" placeholder="Color" required></Input>
+                    </div>
+                    <div class="input-container">
+                        <label>Color</label>
+                        <Input type="text" class="field" name="color" required></Input>
+                    </div>
                     <Button class="btn" onclick="createProduct()">Send</Button>
                 </div>
             </div>

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Page Title</title>
+        <title>Mahhub</title>
         <meta charset="UTF-8">
         <meta name="" content="width=device-width">
         <link rel="stylesheet" href="css/burgerstyle.css"> 
-        <link rel="stylesheet" href="css/randomProduct.css"> 
+        <link rel="stylesheet" href="css/purchaseHistory.css"> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-        <script src="Javascript/addRandom.js"></script>
+        <script src="Javascript/purchaseHistory.js"></script>
+        <!-- <script src="Javascript/webSocket.js"></script> -->
     </head>
     <body>
+        <script src="Javascript/button.js"></script>
         <header>
             <nav class="navbar">
                 <a href="#" class="nav-branding">Mahub</a>
@@ -19,7 +21,7 @@
                         <a href="index.html" class="nav-link" id="home-btn">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" id="new-btn">New</a>
+                        <a href="randomProduct.html" class="nav-link" id="new-btn">New</a>
                     </li>
                     <li class="nav-item">
                         <a href="offers.html" class="nav-link" id="offer-btn">Offers</a>
@@ -34,9 +36,6 @@
                         <a href="Interests.html" class="nav-link">Interests</a>
                     </li>
                     <li class="nav-item">
-                        <a href="Checkout.html" class="nav-link">Checkout</a>
-                    </li>
-                    <li class="nav-item">
                         <a href="Login.html" class="nav-link" id="login.btn">Login</a>
                     </li>
                 </ul>
@@ -48,23 +47,32 @@
             </nav>
             <script src="Javascript/burger.js"></script>
         </header>
-        <div class="search-container">
-            <div class="search-bar">
-                <input type="text" name="" id="search-input" class="search-input" placeholder="Search here !!!">
-                <button class="search-btn" id="search-btn">Search</button>
+        <h2>
+            Purchase History
+        </h2>
+        <div class="history-container">
+            <span>Choose a time period to display purchases</span>
+            <div class="datePicker-container">
+                <input type="date" id="dateStart" class="dateInput" required>
+                <input type="date" id="dateEnd" class="dateInput" required>
+                <button onclick="search()" class="dateBtn">Search</button> 
             </div>
-            <label for="" id="maxRange"> <input type="number" placeholder="Min Price" class="pricefield" id="minField"> - <input type="number" placeholder="Max Price" class="pricefield" id="maxField"></label>
-            <div class="input-container">
-                <label>Quality</label>
-                <select name="quality" class="field" id="quality_box" required>
-                <option class="option" value="new">New</option>
-                <option class="option" value="Very Good">Very Good</option>
-                <option class="option" value="Good">Good</option>
-                <option class="option" value="CAPUT">CAPUT</option>
-            </select>
+            <div class="historyList-container">
+                <ul id="historyList" class="historyList">
+                    <!--TODO: Ta bort dessa, när man hämtar data skapar nya via JS ge dem även class="history-item"
+                    <li class="history-item">
+                        <span>Date: 2023-05-24 Product: MacBook</span>
+                    </li>
+                    <li class="history-item">
+                        <span>Date: 2023-05-23 Product: Bonsai Tree</span>
+                    </li>
+                    <li class="history-item">
+                        <span>Date: 2023-05-22 Product: Max's sock</span>
+                    </li>-->
+                </ul>
+            </div>
+
         </div>
-        <div class="flex-container" id="randomProduct">
-        </div>
-        <button onclick="getStart()" id="loadMore-button" class="loadMore-button">Load More</button>
+        
     </body>
 </html>

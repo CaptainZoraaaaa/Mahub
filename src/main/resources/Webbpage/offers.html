@@ -5,10 +5,10 @@
         <meta charset="UTF-8">
         <meta name="" content="width=device-width">
         <link rel="stylesheet" href="css/burgerstyle.css"> 
-        <link rel="stylesheet" href="css/randomProduct.css"> 
+        <link rel="stylesheet" href="css/offers.css"> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-        <script src="Javascript/addRandom.js"></script>
+        <script src="Javascript/offersSide.js"></script>
     </head>
     <body>
         <header>
@@ -16,10 +16,10 @@
                 <a href="#" class="nav-branding">Mahub</a>
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link" id="home-btn">Home</a>
+                        <a href="LoginIndex.html" class="nav-link" id="home-btn">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" id="new-btn">New</a>
+                        <a href="randomProduct.html" class="nav-link" id="new-btn">New</a>
                     </li>
                     <li class="nav-item">
                         <a href="offers.html" class="nav-link" id="offer-btn">Offers</a>
@@ -28,13 +28,13 @@
                         <a href="addProduct.html" class="nav-link">Add Product</a>
                     </li>
                     <li class="nav-item">
-                        <a href="purchaseHistory.html" class="nav-link" id="purchaseHistory.btn">History</a>
+                        <a href="purchaseHistory.html" class="nav-link">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="test.html" class="nav-link">test</a>
                     </li>
                     <li class="nav-item">
                         <a href="Interests.html" class="nav-link">Interests</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="Checkout.html" class="nav-link">Checkout</a>
                     </li>
                     <li class="nav-item">
                         <a href="Login.html" class="nav-link" id="login.btn">Login</a>
@@ -48,23 +48,20 @@
             </nav>
             <script src="Javascript/burger.js"></script>
         </header>
-        <div class="search-container">
-            <div class="search-bar">
-                <input type="text" name="" id="search-input" class="search-input" placeholder="Search here !!!">
-                <button class="search-btn" id="search-btn">Search</button>
-            </div>
-            <label for="" id="maxRange"> <input type="number" placeholder="Min Price" class="pricefield" id="minField"> - <input type="number" placeholder="Max Price" class="pricefield" id="maxField"></label>
-            <div class="input-container">
-                <label>Quality</label>
-                <select name="quality" class="field" id="quality_box" required>
-                <option class="option" value="new">New</option>
-                <option class="option" value="Very Good">Very Good</option>
-                <option class="option" value="Good">Good</option>
-                <option class="option" value="CAPUT">CAPUT</option>
+        <div class="select_div">
+            <select name="quality" class="field" id="select">
+            
             </select>
+         </div>  
+        <div class="flex-container">
+            <div class="left-field">
+                <img class="img-left" id="img-left" src="" alt="">
+            </div>
+            <div class="right-field">
+                <ul id="list">
+                     
+                </ul>
+            </div>
         </div>
-        <div class="flex-container" id="randomProduct">
-        </div>
-        <button onclick="getStart()" id="loadMore-button" class="loadMore-button">Load More</button>
     </body>
 </html>

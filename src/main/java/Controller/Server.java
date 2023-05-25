@@ -1,22 +1,16 @@
 package Controller;
 
-import Entity.Product;
-import Entity.User;
+import Entity.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import io.javalin.http.sse.SseClient;
 import io.javalin.websocket.WsContext;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 
 public class Server {
@@ -30,6 +24,8 @@ public class Server {
     //Username and their purchase history
     private HashMap<String, ArrayList<Product>> purchaseHistory = new HashMap<>();
     public ConcurrentHashMap<String, WsContext> usersConnected;
+    private LinkedList<IProduct> proxyProducts = new LinkedList<>();
+    private Object proxyLock = new Object();
 
     public static Server getInstance(){
         if (server==null){
@@ -45,7 +41,13 @@ public class Server {
 
     public String addProduct(Product product){
         product.productId = productHashMap.size();
+        product.status = "available";
         productHashMap.put((product.productId), product);
+        ProductProxy productProxy = new ProductProxy(product.productId, product.productName, product.image);
+        synchronized (proxyLock){
+            proxyProducts.addLast(productProxy);
+        }
+        checkInterestedProducts(product.productName);
         return "The product have been added to MaHub";
     }
 
@@ -54,7 +56,7 @@ public class Server {
     }
 
     //From owner's client
-    public void sellProduct(int productId, String buyerName){
+    public String acceptBuyRequest(int productId, String buyerName){
         Product product = productHashMap.get(productId);
         product.status = "sold";
         product.buyerName = buyerName;
@@ -66,6 +68,13 @@ public class Server {
             purchaseHistory.put(buyerName, new ArrayList<>());
             purchaseHistory.get(buyerName).add(product);
         }
+        buyRequestsToSeller.get(product.sellerName).removeIf(temp -> temp.productId == product.productId);
+        return "Product has been sold";
+    }
+    public String denyBuyRequest(int productId, String buyerName){
+        Product product = productHashMap.get(productId);
+        buyRequestsToSeller.get(product.sellerName).removeIf(temp -> temp.productId == productId && temp.buyerName.equals(buyerName));
+        return "Buy request has been denied";
     }
 
     public String buyRequest(int[] productIds, String buyerName){
@@ -73,11 +82,13 @@ public class Server {
             Product product = productHashMap.get(productId);
             String userId = productHashMap.get(productId).sellerName;
             product.buyerName = buyerName;
+            Product temp = new Product();
+            temp.clone(product.productId,product.productName,product.sellerName,product.buyerName,product.price,product.image,product.date,product.condition,product.colour,product.status,product.datePurchased);
             if(buyRequestsToSeller.get(userId) != null){
-                buyRequestsToSeller.get(userId).add(product);
+                buyRequestsToSeller.get(userId).add(temp);
             } else {
                 buyRequestsToSeller.put(userId, new ArrayList<>());
-                buyRequestsToSeller.get(userId).add(product);
+                buyRequestsToSeller.get(userId).add(temp);
             }
         }
         return "Buy request sent";
@@ -97,6 +108,8 @@ public class Server {
     //  för den. Så skapa en EProduxt med product id, name och bild. Så är det
     //  det som skickas till hemsidan. Och om den vill ha hela produkten så laddar den in
     //  den när man klickar in på den
+
+    //TODO: Använda proxy istället för riktiga Product när man kan, framförallt när man läser in?
     public Product[] getProducts(int offset) {
         ArrayList<Product> temp = new ArrayList<>();
         int counter = 0;
@@ -119,35 +132,73 @@ public class Server {
 
         return temp.toArray(new Product[0]);
     }
+    public ProductProxy[] getProxyProducts(int offset) {
+        ArrayList<ProductProxy> temp = new ArrayList<>();
+        int counter = 0;
+        int offsetCounter = offset;
+
+        synchronized (proxyLock){
+            for (IProduct product : proxyProducts) {
+                if (offsetCounter > 0) {
+                    offsetCounter--;
+                    continue;
+                }
+
+                if(productHashMap.get(((ProductProxy) product).productId).status.equals("available")){
+                    temp.add((ProductProxy) product);
+                    counter++;
+                }
+
+                if (counter == proxyProducts.size() || counter == 9) {
+                    break;
+                }
+            }
+        }
+
+        return temp.toArray(new ProductProxy[0]);
+    }
 
     public Product getProductById(int id){
         return productHashMap.get(id);
     }
+    public ProductProxy[] getLatestProducts(){
+        int numberOfProducts = 4;
+        LinkedList<ProductProxy> latestProducts = new LinkedList<>();
+        for (int i = proxyProducts.size()-1; i >=0 && numberOfProducts > 0; i--) {
+            latestProducts.addFirst((ProductProxy) proxyProducts.get(i));
+            numberOfProducts--;
+        }
+        return latestProducts.toArray(latestProducts.toArray(new ProductProxy[0]));
+    }
 
     public Product[] getPurchaseHistory(String username, Date start, Date end){
-        ArrayList<Product> tenp = purchaseHistory.get(username);
-        Product[] products = new Product[tenp.size()];
+        System.out.println(start.toString());
+        System.out.println(end.toString());
+        ArrayList<Product> temp = purchaseHistory.get(username);
+        Product[] products = new Product[temp.size()];
         int i=0;
-        for (Product product:tenp) {
-            if(product.date.before(end) && product.date.after(start)){
+        for (Product product:temp) {
+            System.out.println(product.datePurchased.toString());
+            if(product.datePurchased.before(end) && product.datePurchased.after(start)){
                 products[i++]=product;
             }
         }
+        System.out.println(Arrays.toString(products));
 
         return products;
     }
 
 
     // TODO: Fixat - Linus
-    public Product[] searchProduct(String name, double priceRangeMin, double priceRangeMax, String condition){
+    public Product[] searchProduct(SearchQuery searchQuery){
         ArrayList<Product> temp = new ArrayList<>();
 
         for (Integer key : productHashMap.keySet()) {
             Product product = productHashMap.get(key);
-            if (product.productName.equalsIgnoreCase(name)
-                    && (priceRangeMin == 0 || product.price >= priceRangeMin)
-                    && (priceRangeMax == 0 || product.price <= priceRangeMax)
-                    && (condition == null || product.condition.equalsIgnoreCase(condition))
+            if (product.productName.equalsIgnoreCase(searchQuery.name)
+                    && (searchQuery.priceRangeMin == 0 || product.price >= searchQuery.priceRangeMin)
+                    && (searchQuery.priceRangeMax == 0 || product.price <= searchQuery.priceRangeMax)
+                    && (searchQuery.condition == null || product.condition.equalsIgnoreCase(searchQuery.condition))
                     && product.status.equals("available")) {
                 temp.add(product);
             }
@@ -163,10 +214,33 @@ public class Server {
         for (String user: usersConnected.keySet()) {
             for (String interestProductName : users.get(user).interestedProducts.interests) {
                 if (newProductName.equalsIgnoreCase(interestProductName)){
+                    System.out.println("yes");
                     usersConnected.get(user).send(interestProductName + " is now available on MaHub");
                 }
             }
         }
+    }
+    public String[] getInterests(String username) {
+        User tempUser = users.get(username);
+        ArrayList<String> tempInterests = (ArrayList<String>) tempUser.interestedProducts.interests;
+        return tempInterests.toArray(new String[tempInterests.size()]);
+    }
+    public String addInterest(String username, String interest){
+        User tempUser = users.get(username);
+        tempUser.interestedProducts.interests.add(interest);
+        return "Interest has been added";
+    }
+
+    /**
+     *
+     * Removes the first occurence of the interest String in the List
+     * Should be suitable as users have no reason to have duplicates of interests
+     *
+     */
+    public String removeInterest(String username, String interest){
+        User tempUser = users.get(username);
+        tempUser.interestedProducts.interests.remove(interest);
+        return "Interest has been removed";
     }
 
     public String registerNewUser(User newUser){
@@ -185,7 +259,8 @@ public class Server {
     }
 
     public User getUser(String username){
-        return users.get(username);
+        User tempUser = users.get(username);
+        return tempUser;
     }
 
     public String saveToFile(){

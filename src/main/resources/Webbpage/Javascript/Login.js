@@ -12,7 +12,7 @@ function login(){
         if(data!=null){
             sessionStorage.setItem("firstName", data1.firstName);
             sessionStorage.setItem("username", data1.username);
-            window.location.href = "index.html";
+            window.location.href = "LoginIndex.html";
         }
       });
 }

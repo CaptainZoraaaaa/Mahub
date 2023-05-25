@@ -126,5 +126,10 @@ input[type="number"]::-webkit-inner-spin-button{
 ::placeholder{
   color: aliceblue;
 }
+.input-container{
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
   
   
