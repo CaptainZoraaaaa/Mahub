@@ -16,9 +16,9 @@ $(document).ready(function () {
         dataObject = data;
         document.querySelector("#image_area").style.backgroundImage = "url("+data.image+")";
         $('#file_chooser').append(data.productName);
-        $('#productName').append(data.productName);
-        $('#date').append(data.date);
-        $('#price').append(data.price);
+        $('#productName').append("Product: "+data.productName);
+        $('#date').append("Date added: "+data.date);
+        $('#price').append("Price: "+data.price+" $");
         // ========================================================================================
     })
 });

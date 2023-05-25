@@ -15,7 +15,7 @@ $(document).ready(function(){
     socket.onmessage = function (event){
         alert(event.data);
     }
-});
+}); 
 
 function send(){
     var data = {};
