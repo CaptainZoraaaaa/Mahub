@@ -1,18 +1,10 @@
-const image_input = document.querySelector("#file_chooser");
 
-image_input.addEventListener("change", function(){
-    console.log(image_input.value);
-    const reader = new FileReader();
-    reader.addEventListener("load", () =>{
-        document.querySelector("#image_area").style.backgroundImage = `url(${reader.result})`
-    })
-    reader.readAsDataURL(this.files[0]);
-});
 
 function createProduct (){
     var data = {};
     data.productName = $('[name="productName"]').val();
-    data.sellerName = sessionStorage.getItem("user");
+    data.sellerName = sessionStorage.getItem("username");
+    console.log(data.sellerName);
     data.price = $('[name="price"]').val();
     data.date = $('[id="date"]').val();
     data.image = $('[id="file_chooser"]').val();
