@@ -50,6 +50,7 @@ $(document).ready(function () {
   });
 
   function sendItems(){
+    startAnimation();
     var data = {};
     data.buyerName = sessionStorage.getItem("username");
     var jsonArray = localStorage.getItem("jsonArray");
@@ -67,6 +68,15 @@ $(document).ready(function () {
       data: JSON.stringify(data),
       headers: {"Accept": "application/Json"}
     }).done(function(data){
-        alert(data);
+        
     });
   }
+  function startAnimation() {
+    var button = document.querySelector('.button');
+    button.classList.add('animate');
+  
+    setTimeout(function() {
+      button.classList.remove('animate');
+    }, 2000);
+  }
+ 

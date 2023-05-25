@@ -55,7 +55,7 @@ function sendItems(){
       for(i=offset; i<data.length+offset; i++){
           $('#randomProduct').append('<div class="flex-item" id="d'+i+'" > <img src="'+data[i].image+'" alt="" id="img'+data.s+'"> <p id="p'+i+'">'+data[i].productName+'</p> <button type="button" onclick="showDetails('+i+')">Show details</button></div>');
           productIds[i] = data[i].productId;
-          offset++;
       } 
+      offset=offset+9;
   });
 }
