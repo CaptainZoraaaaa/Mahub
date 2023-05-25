@@ -8,9 +8,12 @@ var dataObject;
 $(document).ready(function () {
     id = urlParam.get("id");
     console.log(id);
+    var data ={};
+    data.productId = id;
     $.ajax({
-      method: "GET",
-      url: "http://localHost:5500/getProduct/" + id,
+      method: "POST",
+      data: JSON.stringify(data),
+      url: "http://localHost:5500/getProductDetails",
       headers: {"Accept": "application/Json"}
     }).done(function (data){
         dataObject = data;
