@@ -66,7 +66,7 @@ li{
     transition: 0.4s ease-in-out;
 }
 .btn-accept:hover {
-    transform: scale(150%);
+    transform: scale(120%);
 }
 .btn-reject{
     display: inline-block;
@@ -79,7 +79,7 @@ li{
     transition: 0.4s ease-in-out;
 }
 .btn-reject:hover {
-    transform: scale(150%);  
+    transform: scale(120%);  
 }
 .img-btn{
     display: flex;
