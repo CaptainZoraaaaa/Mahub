@@ -88,7 +88,7 @@ public class Main {
                     User user = server.getUser(userid);
                     if ( user.interestedProducts != null && user.interestedProducts.interests.size() != 0 ){
                         for (String productName:user.interestedProducts.interests) {
-                            server.checkInterestedProducts(productName);
+                            server.checkIfInterestedProductsExist(productName, user);
                         }
                     }
                 });

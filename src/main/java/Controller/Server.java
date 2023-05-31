@@ -214,19 +214,31 @@ public class Server {
         for (String user: usersConnected.keySet()) {
             for (String interestProductName : users.get(user).interestedProducts.interests) {
                 if (newProductName.equalsIgnoreCase(interestProductName)){
-                    System.out.println("yes");
                     usersConnected.get(user).send(interestProductName + " is now available on MaHub");
                 }
             }
         }
     }
+    public void checkIfInterestedProductsExist(String productName, User user) {
+        for (Integer key : productHashMap.keySet()) {
+            if (productHashMap.get(key).productName.equalsIgnoreCase(productName) && productHashMap.get(key).status.equalsIgnoreCase("available")){
+                usersConnected.get(user.username).send(productName + " is now available on Mahub!!!");
+            }
+        }
+    }
     public String[] getInterests(String username) {
         User tempUser = users.get(username);
+        if (tempUser.interestedProducts == null ){
+            tempUser.interestedProducts = new Interests(new ArrayList<String>());
+        }
         ArrayList<String> tempInterests = (ArrayList<String>) tempUser.interestedProducts.interests;
         return tempInterests.toArray(new String[tempInterests.size()]);
     }
     public String addInterest(String username, String interest){
         User tempUser = users.get(username);
+        if (tempUser.interestedProducts == null ){
+            tempUser.interestedProducts = new Interests(new ArrayList<String>());
+        }
         tempUser.interestedProducts.interests.add(interest);
         return "Interest has been added";
     }
@@ -239,6 +251,10 @@ public class Server {
      */
     public String removeInterest(String username, String interest){
         User tempUser = users.get(username);
+        if (tempUser.interestedProducts == null ){
+            tempUser.interestedProducts = new Interests(new ArrayList<String>());
+            return "No Interest list created";
+        }
         tempUser.interestedProducts.interests.remove(interest);
         return "Interest has been removed";
     }
@@ -317,4 +333,5 @@ public class Server {
         System.out.println(server.removeProduct(0));
         System.out.println(server.removeProduct(1));
     }
+
 }
