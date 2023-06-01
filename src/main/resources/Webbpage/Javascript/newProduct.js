@@ -17,7 +17,7 @@ function createProduct (){
         data: JSON.stringify(data),
         headers: {"Accept": "application/Json"}
     }).done(function(data){
-        alert(data);
+        alert("Product added to the Market Thanks for Using Mahub!! 🙂");
     });
  
 }

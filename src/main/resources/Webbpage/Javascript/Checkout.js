@@ -68,7 +68,15 @@ $(document).ready(function () {
       data: JSON.stringify(data),
       headers: {"Accept": "application/Json"}
     }).done(function(data){
-        
+      var jsonArray = localStorage.getItem("jsonArray");
+      var array = JSON.parse(jsonArray);
+      if (array != null) {
+          array = [];
+      }
+      
+      jsonArray = JSON.stringify(array);
+      localStorage.setItem('jsonArray', jsonArray);
+      
     });
   }
   function startAnimation() {

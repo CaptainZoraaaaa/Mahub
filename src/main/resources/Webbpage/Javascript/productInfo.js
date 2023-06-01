@@ -43,4 +43,5 @@ function addToCart(){
     array.forEach(element => {
         console.log(element.productId);
     });
+    window.location.href = "randomProduct.html";
 }

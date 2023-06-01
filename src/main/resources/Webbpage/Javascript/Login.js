@@ -12,6 +12,14 @@ function login(){
         if(data!=null){
             sessionStorage.setItem("firstName", data1.firstName);
             sessionStorage.setItem("username", data1.username);
+            var jsonArray = localStorage.getItem("jsonArray");
+            var array = JSON.parse(jsonArray);
+            if (array != null) {
+                array = [];
+            }
+            
+            jsonArray = JSON.stringify(array);
+            localStorage.setItem('jsonArray', jsonArray);
             window.location.href = "LoginIndex.html";
         }
       });
