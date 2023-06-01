@@ -2,6 +2,10 @@
 
 function createUser (){
   var data = {};
+  if($('[name="firstName"]').val() == ""){
+    alert("Not allowed blank input");
+    window.location.href = "Register.html";
+  }
   data.firstName = $('[name="firstName"]').val();
   data.lastName = $('[name="lastName"]').val();
   data.dateOfBirth = $('[name="dateOfBirth"]').val();
